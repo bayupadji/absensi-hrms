@@ -9,28 +9,29 @@ class EmployeeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            scrolledUnderElevation: 0,
-            backgroundColor: AppColors.backgroundColor,
-            toolbarHeight: 56,
-            centerTitle: true,
-            leading: SizedBox(
-              width: 16,
+          scrolledUnderElevation: 0,
+          backgroundColor: AppColors.backgroundColor,
+          toolbarHeight: 56,
+          centerTitle: true,
+          leading: SizedBox(
+            width: 16,
+          ),
+          leadingWidth: 16,
+          title: SizedBox(
+            width: double.infinity,
+            child: Text(
+              'Karyawan',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
             ),
-            leadingWidth: 16,
-            title: SizedBox(
-              width: double.infinity,
-              child: Text(
-                'Karyawan',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-              ),
-            ),
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.search, color: AppColors.darkColor),
-              )
-            ]),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.search, color: AppColors.darkColor),
+            )
+          ]
+        ),
         body: Column(
           children: [FilterStatus(), Listkaryawan()],
         ));

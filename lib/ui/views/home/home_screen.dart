@@ -271,17 +271,36 @@ class Menus extends StatelessWidget {
             color: AppColors.backgroundColor,
             borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
           ),
-          child: SingleChildScrollView(
-            controller: scrollController,
-            child: Column(
-              children: [
-                MenuGrid(),
-                Informations(),
-                SizedBox(height: 24),
-                Activity(),
-                SizedBox(height: 24),
-              ],
-            ),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 8, bottom: 2),
+                child: Center(
+                  child: Container(
+                    width: 40,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[400],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  controller: scrollController,
+                  child: Column(
+                    children: [
+                      MenuGrid(),
+                      Informations(),
+                      SizedBox(height: 24),
+                      Activity(),
+                      SizedBox(height: 24),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       },

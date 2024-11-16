@@ -1,6 +1,6 @@
 import 'package:absensi/domain/controllers/home/home_controller.dart';
 import 'package:absensi/ui/views/employee/employee.dart';
-import 'package:absensi/ui/views/home_screen.dart';
+import 'package:absensi/ui/views/home/home_screen.dart';
 import 'package:absensi/ui/views/inbox/inbox.dart';
 import 'package:absensi/ui/views/profile/profil.dart';
 import 'package:absensi/ui/views/schedule/schedule.dart';
