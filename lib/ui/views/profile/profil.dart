@@ -1,4 +1,7 @@
+import 'package:absensi/ui/widgets/box_card/diklat_period_box.dart';
 import 'package:absensi/ui/widgets/box_card/menu_card.dart';
+import 'package:absensi/ui/widgets/box_card/profile_box.dart';
+import 'package:absensi/ui/widgets/box_card/reward_box.dart';
 import 'package:absensi/utils/assets.dart';
 import 'package:absensi/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +13,7 @@ class ProfilScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
+        surfaceTintColor: AppColors.backgroundColor,
         scrolledUnderElevation: 0,
         centerTitle: true,
         toolbarHeight: 56,
@@ -23,19 +26,41 @@ class ProfilScreen extends StatelessWidget {
           ),
         ),
         elevation: 4.0,
+        shadowColor: Color(0x1418274B),
       ),
-      body: Container(
-        padding: EdgeInsets.all(16),
-        child: ListView(
-          children: [
-            Column(
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
               children: [
+                ProfileBox(
+                  title: 'Bayu Prasetya Adji S',
+                  jobtitle: 'UIUX Designer', 
+                  category: 'non-shift',
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    RewardBox(
+                      title: 'Reward Presensi',
+                      bonus: 'Rp300.000',
+                    ),
+                    const SizedBox(width: 16),
+                    DiklatPeriodBox(
+                      title: 'Masa Diklat',
+                      time: '02h 00m',
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
                 AkunList(),
+                const SizedBox(height: 16),
                 LainyaList(),
               ],
             ),
-          ]
-        ),
+          ),
+        ]
       ),
     );
   }
@@ -64,7 +89,7 @@ class AkunList extends StatelessWidget {
         ),
         SizedBox(height: 8,),
         MenuCard(
-          icon: Assets.nUsergroup,
+          icon: Assets.nProfil,
           title: 'Data Personal & Keluarga',
           onTap: (){},
         ),
@@ -74,7 +99,6 @@ class AkunList extends StatelessWidget {
           title: 'Ubah Kata Sandi',
           onTap: (){},
         ),
-        SizedBox(height: 8,),
       ],
     );
   }
