@@ -7,6 +7,7 @@ import 'package:absensi/ui/widgets/button/attend_btn.dart';
 import 'package:absensi/utils/assets.dart';
 import 'package:absensi/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 class HomeScreenContent extends StatelessWidget {
@@ -65,12 +66,12 @@ class HomeScreenContent extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              top: 0,
+              top: MediaQuery.of(context).size.height * 0.05,
               left: 0,
               right: 0,
               child: Column(
                 children: [
-                  SizedBox(height: 24),
+                  SizedBox(height: 10),
                   Attend(),
                 ],
               ),
@@ -123,8 +124,42 @@ class Attend extends StatelessWidget {
             height: 24,
           ),
           AttendButton(onPressed: () {
-            // actions
-          }),
+             Get.snackbar(
+                '',
+                '',
+                duration: Duration(seconds: 2),
+                snackPosition: SnackPosition.TOP,
+                margin: EdgeInsets.all(16),
+                backgroundColor: Colors.blue,
+                colorText: Colors.white,
+                isDismissible: true,
+                dismissDirection: DismissDirection.horizontal,
+                mainButton: TextButton(
+                  onPressed: () {
+                    // Close the SnackBar when the X button is pressed
+                    Get.back();
+                  },
+                  child: Icon(
+                    Icons.close,
+                    color: Colors.white,
+                  ),
+                ),
+                titleText: Row(
+                  children: [
+                    Icon(
+                      Icons.warning, // Exclamation mark icon
+                      color: Colors.white,
+                    ),
+                    SizedBox(width: 8), // Space between icon and text
+                    Text(
+                      'Debugging Clicked!',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
           SizedBox(
             height: 24,
           ),
@@ -261,9 +296,10 @@ class Menus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double initialSize = MediaQuery.of(context).orientation == Orientation.portrait ? 0.3 : 0.5;
     return DraggableScrollableSheet(
-      initialChildSize: 0.38,
-      minChildSize: 0.38,
+      initialChildSize: initialSize,
+      minChildSize: 0.25,
       maxChildSize: 1.0,
       builder: (BuildContext context, ScrollController scrollController) {
         return Container(

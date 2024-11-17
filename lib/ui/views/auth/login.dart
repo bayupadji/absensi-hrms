@@ -9,19 +9,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+   LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            HelpCenter(),
-            CompanyLogo(),
-            LoginForm(),
-          ],
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              HelpCenter(),
+              CompanyLogo(),
+              LoginForm(),
+            ],
+          ),
         ),
       ),
     );
@@ -72,79 +74,112 @@ class CompanyLogo extends StatelessWidget {
   }
 }
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends GetView<AuthController> {
   const LoginForm({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final AuthController authController = Get.find();
     final AppController appController = Get.find();
 
     return Container(
-        padding: EdgeInsets.all(24.0),
-        child: Column(
-          children: [
-            InputTextFields(
-              label: 'Email/Username',
-              hint: 'Masukan email atau username',
-              isPassword: false,
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            InputTextFields(
-              label: 'Password',
-              hint: 'Masukan password',
-              isPassword: true
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                GestureDetector(
-                  onTap: () {},
-                  child: Text(
-                    'Lupa Password?',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: AppColors.primaryColor,
-                    ),
+      padding: EdgeInsets.all(24.0),
+      child: Column(
+        children: [
+          InputTextFields(
+            label: 'Email/Username',
+            hint: 'Masukan email atau username',
+            isPassword: false,
+            controller: controller.emailController, // Connect controller
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          InputTextFields(
+            label: 'Password',
+            hint: 'Masukan password',
+            isPassword: true,
+            controller: controller.passwordController, // Connect controller
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  // Handle forgot password logic
+                },
+                child: Text(
+                  'Lupa Password?',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: AppColors.primaryColor,
                   ),
                 ),
-              ],
-            ),
-            SizedBox(
-              height: 24,
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: DefaultButton(
-                label: 'Masuk',
-                onPressed: () {
-                  authController.onMove();
-                },
-                bgColor: AppColors.primaryColor,
-                fgColor: AppColors.backgroundColor
               ),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: Text(
-                'Version ${appController.version.value}',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: AppColors.greyColor,
+            ],
+          ),
+          SizedBox(
+            height: 24,
+          ),
+          Obx(() => SizedBox(
+                width: double.infinity,
+                child: DefaultButton(
+                  label: 'Masuk',
+                  onPressed: controller.isLoading.value
+                      ? null
+                      : () {
+                          controller.login();
+                        },
+                  bgColor: AppColors.primaryColor,
+                  fgColor: AppColors.backgroundColor,
                 ),
+              )),
+          SizedBox(
+            height: 16,
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: Text(
+              'Version ${appController.version.value}',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14,
+                color: AppColors.greyColor,
               ),
-            )
-          ],
-        )
-      );
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
+
+
+class InputTextFields extends StatelessWidget {
+  final String label;
+  final String hint;
+  final bool isPassword;
+  final TextEditingController? controller;
+
+  const InputTextFields({
+    required this.label,
+    required this.hint,
+    required this.isPassword,
+    this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      obscureText: isPassword,
+      decoration: InputDecoration(
+        labelText: label,
+        hintText: hint,
+      ),
+    );
+  }
+}
+

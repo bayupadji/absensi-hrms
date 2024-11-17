@@ -10,14 +10,16 @@ dependencies:
   carousel_slider: ^5.0.0
   date_picker_plus: ^4.1.0
   dio: ^5.7.0
+  http: ^1.2.2
+  shared_preferences: ^2.3.3
   flutter:
     sdk: flutter
   geolocator: ^13.0.1
   get: ^4.6.6
   google_fonts: ^6.2.1
-  intl: ^0.17.0
+  intl: ^0.19.0
   package_info_plus: ^8.1.0
-  syncfusion_flutter_datepicker: ^21.2.3
+  syncfusion_flutter_datepicker: ^27.2.2
 
 dev_dependencies:
   flutter_test:

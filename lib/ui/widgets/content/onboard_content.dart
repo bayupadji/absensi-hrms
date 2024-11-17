@@ -33,10 +33,10 @@ class OnboardingContent extends StatelessWidget {
                   ),
                   textAlign: TextAlign.start,
                 ),
-                SizedBox(height: 12),
+                SizedBox(height: 10),
                 Text(
                   onboardingData.description,
-                  style: TextStyle(fontSize: 16, color: AppColors.darkColor),
+                  style: TextStyle(fontSize: 14, color: AppColors.darkColor),
                   textAlign: TextAlign.justify,
                 ),
               ],
