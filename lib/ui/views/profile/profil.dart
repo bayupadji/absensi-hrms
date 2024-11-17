@@ -22,7 +22,7 @@ class ProfilScreen extends StatelessWidget {
           'Profil',
           style: TextStyle(
             fontSize: 16,
-            fontWeight: FontWeight.w700
+            fontWeight: FontWeight.w700,
           ),
         ),
         elevation: 4.0,
@@ -83,7 +83,7 @@ class AkunList extends StatelessWidget {
         ),
         SizedBox(height: 4),
         MenuCard(
-          icon: Assets.nUsergroup,
+          icon: Assets.briefcase,
           title: 'Detail Data Karyawan',
           onTap: (){},
         ),
@@ -95,7 +95,7 @@ class AkunList extends StatelessWidget {
         ),
         SizedBox(height: 8,),
         MenuCard(
-          icon: Assets.nUsergroup,
+          icon: Assets.lock,
           title: 'Ubah Kata Sandi',
           onTap: (){},
         ),
@@ -121,7 +121,7 @@ class LainyaList extends StatelessWidget {
         ),
         SizedBox(height: 4),
         MenuCard(
-          icon: Assets.nUsergroup,
+          icon: Assets.shield,
           title: 'Syarat dan Ketentuan',
           onTap: () {},
         ),

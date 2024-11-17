@@ -41,4 +41,17 @@ class Assets {
   static const String clockOut = '${systemImg}clock_out.png';
   static const String clockTime = '${systemImg}clock_time.png';
   static const String notifications = '${systemImg}bell.png';
+  static const String notificationsFill = '${systemImg}bell_fill.png';
+  static const String briefcase = '${systemImg}Briefcase.png';
+  static const String briefcaseFill = '${systemImg}BriefcaseFill.png';
+  static const String calendarLine = '${systemImg}calendar_line.png';
+  static const String filter = '${systemImg}filter.png';
+  static const String list = '${systemImg}list.png';
+  static const String lock = '${systemImg}lock.png';
+  static const String lockFill = '${systemImg}lock_fill.png';
+  static const String search = '${systemImg}search.png';
+  static const String shield = '${systemImg}shield.png';
+  static const String trash = '${systemImg}trash.png';
+  static const String usercomunity = '${systemImg}usercomunity.png';
+  static const String folder = '${systemImg}folder.png';
 }

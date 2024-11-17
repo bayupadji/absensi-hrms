@@ -1,3 +1,7 @@
 {
+<<<<<<< HEAD
     "cmake.ignoreCMakeListsMissing": true
+=======
+    "editor.guides.bracketPairs": true
+>>>>>>> 737a0fb609119aa24d51579b939e3c6212a2afb3
 }

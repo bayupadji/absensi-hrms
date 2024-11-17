@@ -29,22 +29,32 @@ class MenuCard extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.asset(
-                icon,
-                width: 24,
-                height: 24,
-                color: AppColors.darkColor,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Image.asset(
+                    icon,
+                    width: 24,
+                    height: 24,
+                    color: AppColors.darkColor,
+                  ),
+                  SizedBox(width: 12),
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: AppColors.darkColor
+                    ),
+                  )
+                ],
               ),
-              SizedBox(width: 12),
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: AppColors.darkColor
-                ),
+              Icon(
+                Icons.chevron_right_rounded,
+                size: 24,
+                color: AppColors.greyColor,
               )
             ],
           ),

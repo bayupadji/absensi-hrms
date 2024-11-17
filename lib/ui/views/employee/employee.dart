@@ -1,4 +1,5 @@
 import 'package:absensi/ui/widgets/box_card/employee_box.dart';
+import 'package:absensi/utils/assets.dart';
 import 'package:absensi/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -28,13 +29,21 @@ class EmployeeScreen extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {},
-              icon: Icon(Icons.search, color: AppColors.darkColor),
+              icon: Image.asset(
+                Assets.search,
+                width: 24,
+                height: 24,
+              ),
             )
           ]
         ),
         body: Column(
-          children: [FilterStatus(), Listkaryawan()],
-        ));
+          children: [
+            FilterStatus(),
+            Listkaryawan()
+          ],
+        )
+      );
   }
 }
 
@@ -53,10 +62,10 @@ class FilterStatus extends StatelessWidget {
               blurRadius: 4,
               offset: Offset(0, 4),
               spreadRadius: -2,
-            )
-          ]),
+            )]
+          ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -67,10 +76,10 @@ class FilterStatus extends StatelessWidget {
                       color: AppColors.darkColor,
                       fontWeight: FontWeight.w500),
                 ),
-                Icon(
-                  Icons.filter_alt_outlined,
-                  size: 24,
-                  color: AppColors.darkColor,
+                Image.asset(
+                  Assets.filter,
+                  width: 24,
+                  height: 24,
                 )
               ],
             ),

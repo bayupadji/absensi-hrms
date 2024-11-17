@@ -39,6 +39,19 @@ flutter:
     - assets/icons/system/clock_out.png
     - assets/icons/system/clock_time.png
     - assets/icons/system/bell.png
+    - assets/icons/system/bell_fill.png
+    - assets/icons/system/calendar_line.png
+    - assets/icons/system/filter.png
+    - assets/icons/system/Briefcase.png
+    - assets/icons/system/Briefcase_fill.png
+    - assets/icons/system/list.png
+    - assets/icons/system/lock_fill.png
+    - assets/icons/system/lock.png
+    - assets/icons/system/search.png
+    - assets/icons/system/shield.png
+    - assets/icons/system/trash.png
+    - assets/icons/system/folder.png
+    - assets/icons/system/usercomunity.png
     - assets/icons/menus/Calendar.png
     - assets/icons/menus/Documents.png
     - assets/icons/menus/Form.png
