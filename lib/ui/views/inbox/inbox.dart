@@ -104,14 +104,44 @@ class ButuhApprovalTab extends StatelessWidget {
           child: Column(
             children: [
               MenuCard(
-                icon: Assets.mCalendar,
+                icon: Assets.list,
+                title: 'Reimbursement',
+                onTap: () {},
+              ),
+              SizedBox(height: 8,),
+              MenuCard(
+                icon: Assets.nProfil,
                 title: 'Perubahan Data',
                 onTap: () {},
               ),
               SizedBox(height: 8,),
               MenuCard(
-                icon: Assets.mCalendar,
-                title: 'Perubahan Data',
+                icon: Assets.calendarLine,
+                title: 'Perubahan Jadwal',
+                onTap: () {},
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              MenuCard(
+                icon: Assets.clockIn,
+                title: 'Cuti',
+                onTap: () {},
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              MenuCard(
+                icon: Assets.briefcase,
+                title: 'Perizinan',
+                onTap: () {},
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              MenuCard(
+                icon: Assets.folder,
+                title: 'Diklat',
                 onTap: () {},
               ),
             ],

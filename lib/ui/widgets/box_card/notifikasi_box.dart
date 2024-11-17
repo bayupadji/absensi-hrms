@@ -1,3 +1,4 @@
+import 'package:absensi/utils/assets.dart';
 import 'package:absensi/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -26,11 +27,12 @@ class NotifikasiBox extends StatelessWidget {
                     color: AppColors.lightColor,
                   )
                 ),
-                child: const Icon(
-                  Icons.notifications_active_rounded,
-                  color: AppColors.primarySwatch,
-                  size: 24,
-                ),
+                child: Image.asset(
+                  Assets.notificationsFill,
+                  color: AppColors.primaryColor,
+                  width: 24,
+                  height: 24,
+                )
               ),
               SizedBox(
                 width: 12,

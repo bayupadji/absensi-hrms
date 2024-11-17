@@ -117,12 +117,13 @@ class FilterDate extends StatelessWidget {
               Text(
                 formattedDate,
                 style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.darkColor),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.darkColor
+                ),
               ),
               Image.asset(
-                Assets.nCalendar,
+                Assets.calendarLine,
                 width: 24,
                 height: 24,
               ),
