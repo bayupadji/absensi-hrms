@@ -33,8 +33,12 @@ class EmployeeScreen extends StatelessWidget {
           ]
         ),
         body: Column(
-          children: [FilterStatus(), Listkaryawan()],
-        ));
+          children: [
+            FilterStatus(),
+            Listkaryawan()
+          ],
+        )
+      );
   }
 }
 
@@ -53,10 +57,10 @@ class FilterStatus extends StatelessWidget {
               blurRadius: 4,
               offset: Offset(0, 4),
               spreadRadius: -2,
-            )
-          ]),
+            )]
+          ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

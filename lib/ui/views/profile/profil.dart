@@ -22,7 +22,7 @@ class ProfilScreen extends StatelessWidget {
           'Profil',
           style: TextStyle(
             fontSize: 16,
-            fontWeight: FontWeight.w700
+            fontWeight: FontWeight.w700,
           ),
         ),
         elevation: 4.0,
