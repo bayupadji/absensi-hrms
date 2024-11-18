@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:absensi/data/models/login_model.dart';
-import 'package:absensi/domain/services/app_repoUrl.dart';
+import 'package:absensi/domain/services/app_repourl.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -36,7 +36,7 @@ class AppServices {
         print('Parsed Token: $token');
 
         // Check if login is successful
-        if (status == 200 && userData != null) {
+        if (status == 200) {
           if (token.isNotEmpty) {
             final prefs = await SharedPreferences.getInstance();
             await prefs.setString('token', token);

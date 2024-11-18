@@ -5,16 +5,16 @@ class MdlLogin {
   MdlLogin({this.user, this.token});
 
   MdlLogin.fromJson(Map<String, dynamic> json) {
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
     token = json['token'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.user != null) {
-      data['user'] = this.user!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (user != null) {
+      data['user'] = user!.toJson();
     }
-    data['token'] = this.token;
+    data['token'] = token;
     return data;
   }
 }
@@ -29,13 +29,13 @@ class User {
   User.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -83,46 +83,46 @@ class Data {
     statusAktif = json['status_aktif'];
     dataCompletionStep = json['data_completion_step'];
     dataKaryawan = json['data_karyawan'] != null
-        ? new DataKaryawan.fromJson(json['data_karyawan'])
+        ? DataKaryawan.fromJson(json['data_karyawan'])
         : null;
-    role = json['role'] != null ? new Role.fromJson(json['role']) : null;
+    role = json['role'] != null ? Role.fromJson(json['role']) : null;
     permission = json['permission'].cast<int>();
     
     // Perbaiki bagian ini
     potonganGaji = json['potongan_gaji'] != null 
         ? List<dynamic>.from(json['potongan_gaji'])
         : null;
-        
+
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['id'] = this.id;
-    data['nama'] = this.nama;
-    data['email'] = this.email;
-    data['username'] = this.username;
-    data['foto_profil'] = this.fotoProfil;
-    data['status_aktif'] = this.statusAktif;
-    data['data_completion_step'] = this.dataCompletionStep;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['nama'] = nama;
+    data['email'] = email;
+    data['username'] = username;
+    data['foto_profil'] = fotoProfil;
+    data['status_aktif'] = statusAktif;
+    data['data_completion_step'] = dataCompletionStep;
 
-    if (this.dataKaryawan != null) {
-      data['data_karyawan'] = this.dataKaryawan!.toJson();
+    if (dataKaryawan != null) {
+      data['data_karyawan'] = dataKaryawan!.toJson();
     }
 
-    if (this.role != null) {
-      data['role'] = this.role!.toJson();
+    if (role != null) {
+      data['role'] = role!.toJson();
     }
 
-    data['permission'] = this.permission;
+    data['permission'] = permission;
 
-    if (this.potonganGaji != null) {
-      data['potongan_gaji'] = this.potonganGaji;
+    if (potonganGaji != null) {
+      data['potongan_gaji'] = potonganGaji;
     }
 
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }
@@ -133,7 +133,7 @@ class DataKaryawan {
   String? nik;
   String? noRm;
   String? noSip;
-  Null? masaBerlakuSip;
+  dynamic masaBerlakuSip;
   String? noManulife;
   String? tglMasuk;
   UnitKerja? unitKerja;
@@ -152,7 +152,7 @@ class DataKaryawan {
   int? uangLembur;
   int? uangMakan;
   Ptkp? ptkp;
-  Null? tglKeluar;
+  dynamic tglKeluar;
   String? noKk;
   String? alamat;
   String? gelarDepan;
@@ -161,7 +161,7 @@ class DataKaryawan {
   String? noBpjsksh;
   String? noBpjsktk;
   String? tglDiangkat;
-  Null? masaKerja;
+  dynamic masaKerja;
   String? npwp;
   int? jenisKelamin;
   StatusKaryawan? agama;
@@ -176,7 +176,7 @@ class DataKaryawan {
   String? noIjazah;
   int? tahunLulus;
   String? noStr;
-  Null? masaBerlakuStr;
+  dynamic masaBerlakuStr;
   String? tglBerakhirPks;
   int? masaDiklat;
   String? createdAt;
@@ -247,21 +247,21 @@ class DataKaryawan {
     noManulife = json['no_manulife'];
     tglMasuk = json['tgl_masuk'];
     unitKerja = json['unit_kerja'] != null
-        ? new UnitKerja.fromJson(json['unit_kerja'])
+        ? UnitKerja.fromJson(json['unit_kerja'])
         : null;
     jabatan =
-        json['jabatan'] != null ? new Jabatan.fromJson(json['jabatan']) : null;
+        json['jabatan'] != null ? Jabatan.fromJson(json['jabatan']) : null;
     kompetensi = json['kompetensi'] != null
-        ? new Kompetensi.fromJson(json['kompetensi'])
+        ? Kompetensi.fromJson(json['kompetensi'])
         : null;
     nikKtp = json['nik_ktp'];
     statusKaryawan = json['status_karyawan'] != null
-        ? new StatusKaryawan.fromJson(json['status_karyawan'])
+        ? StatusKaryawan.fromJson(json['status_karyawan'])
         : null;
     tempatLahir = json['tempat_lahir'];
     tglLahir = json['tgl_lahir'];
     kelompokGaji = json['kelompok_gaji'] != null
-        ? new KelompokGaji.fromJson(json['kelompok_gaji'])
+        ? KelompokGaji.fromJson(json['kelompok_gaji'])
         : null;
     noRekening = json['no_rekening'];
     tunjanganJabatan = json['tunjangan_jabatan'];
@@ -270,7 +270,7 @@ class DataKaryawan {
     tunjanganLainnya = json['tunjangan_lainnya'];
     uangLembur = json['uang_lembur'];
     uangMakan = json['uang_makan'];
-    ptkp = json['ptkp'] != null ? new Ptkp.fromJson(json['ptkp']) : null;
+    ptkp = json['ptkp'] != null ? Ptkp.fromJson(json['ptkp']) : null;
     tglKeluar = json['tgl_keluar'];
     noKk = json['no_kk'];
     alamat = json['alamat'];
@@ -284,14 +284,14 @@ class DataKaryawan {
     npwp = json['npwp'];
     jenisKelamin = json['jenis_kelamin'];
     agama = json['agama'] != null
-        ? new StatusKaryawan.fromJson(json['agama'])
+        ? StatusKaryawan.fromJson(json['agama'])
         : null;
     golonganDarah = json['golongan_darah'] != null
-        ? new StatusKaryawan.fromJson(json['golongan_darah'])
+        ? StatusKaryawan.fromJson(json['golongan_darah'])
         : null;
     asalSekolah = json['asal_sekolah'];
     pendidikanTerakhir = json['pendidikan_terakhir'] != null
-        ? new PendidikanTerakhir.fromJson(json['pendidikan_terakhir'])
+        ? PendidikanTerakhir.fromJson(json['pendidikan_terakhir'])
         : null;
     tinggiBadan = json['tinggi_badan'];
     beratBadan = json['berat_badan'];
@@ -309,78 +309,78 @@ class DataKaryawan {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['email'] = this.email;
-    data['nik'] = this.nik;
-    data['no_rm'] = this.noRm;
-    data['no_sip'] = this.noSip;
-    data['masa_berlaku_sip'] = this.masaBerlakuSip;
-    data['no_manulife'] = this.noManulife;
-    data['tgl_masuk'] = this.tglMasuk;
-    if (this.unitKerja != null) {
-      data['unit_kerja'] = this.unitKerja!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['email'] = email;
+    data['nik'] = nik;
+    data['no_rm'] = noRm;
+    data['no_sip'] = noSip;
+    data['masa_berlaku_sip'] = masaBerlakuSip;
+    data['no_manulife'] = noManulife;
+    data['tgl_masuk'] = tglMasuk;
+    if (unitKerja != null) {
+      data['unit_kerja'] = unitKerja!.toJson();
     }
-    if (this.jabatan != null) {
-      data['jabatan'] = this.jabatan!.toJson();
+    if (jabatan != null) {
+      data['jabatan'] = jabatan!.toJson();
     }
-    if (this.kompetensi != null) {
-      data['kompetensi'] = this.kompetensi!.toJson();
+    if (kompetensi != null) {
+      data['kompetensi'] = kompetensi!.toJson();
     }
-    data['nik_ktp'] = this.nikKtp;
-    if (this.statusKaryawan != null) {
-      data['status_karyawan'] = this.statusKaryawan!.toJson();
+    data['nik_ktp'] = nikKtp;
+    if (statusKaryawan != null) {
+      data['status_karyawan'] = statusKaryawan!.toJson();
     }
-    data['tempat_lahir'] = this.tempatLahir;
-    data['tgl_lahir'] = this.tglLahir;
-    if (this.kelompokGaji != null) {
-      data['kelompok_gaji'] = this.kelompokGaji!.toJson();
+    data['tempat_lahir'] = tempatLahir;
+    data['tgl_lahir'] = tglLahir;
+    if (kelompokGaji != null) {
+      data['kelompok_gaji'] = kelompokGaji!.toJson();
     }
-    data['no_rekening'] = this.noRekening;
-    data['tunjangan_jabatan'] = this.tunjanganJabatan;
-    data['tunjangan_fungsional'] = this.tunjanganFungsional;
-    data['tunjangan_khusus'] = this.tunjanganKhusus;
-    data['tunjangan_lainnya'] = this.tunjanganLainnya;
-    data['uang_lembur'] = this.uangLembur;
-    data['uang_makan'] = this.uangMakan;
-    if (this.ptkp != null) {
-      data['ptkp'] = this.ptkp!.toJson();
+    data['no_rekening'] = noRekening;
+    data['tunjangan_jabatan'] = tunjanganJabatan;
+    data['tunjangan_fungsional'] = tunjanganFungsional;
+    data['tunjangan_khusus'] = tunjanganKhusus;
+    data['tunjangan_lainnya'] = tunjanganLainnya;
+    data['uang_lembur'] = uangLembur;
+    data['uang_makan'] = uangMakan;
+    if (ptkp != null) {
+      data['ptkp'] = ptkp!.toJson();
     }
-    data['tgl_keluar'] = this.tglKeluar;
-    data['no_kk'] = this.noKk;
-    data['alamat'] = this.alamat;
-    data['gelar_depan'] = this.gelarDepan;
-    data['gelar_belakang'] = this.gelarBelakang;
-    data['no_hp'] = this.noHp;
-    data['no_bpjsksh'] = this.noBpjsksh;
-    data['no_bpjsktk'] = this.noBpjsktk;
-    data['tgl_diangkat'] = this.tglDiangkat;
-    data['masa_kerja'] = this.masaKerja;
-    data['npwp'] = this.npwp;
-    data['jenis_kelamin'] = this.jenisKelamin;
-    if (this.agama != null) {
-      data['agama'] = this.agama!.toJson();
+    data['tgl_keluar'] = tglKeluar;
+    data['no_kk'] = noKk;
+    data['alamat'] = alamat;
+    data['gelar_depan'] = gelarDepan;
+    data['gelar_belakang'] = gelarBelakang;
+    data['no_hp'] = noHp;
+    data['no_bpjsksh'] = noBpjsksh;
+    data['no_bpjsktk'] = noBpjsktk;
+    data['tgl_diangkat'] = tglDiangkat;
+    data['masa_kerja'] = masaKerja;
+    data['npwp'] = npwp;
+    data['jenis_kelamin'] = jenisKelamin;
+    if (agama != null) {
+      data['agama'] = agama!.toJson();
     }
-    if (this.golonganDarah != null) {
-      data['golongan_darah'] = this.golonganDarah!.toJson();
+    if (golonganDarah != null) {
+      data['golongan_darah'] = golonganDarah!.toJson();
     }
-    data['asal_sekolah'] = this.asalSekolah;
-    if (this.pendidikanTerakhir != null) {
-      data['pendidikan_terakhir'] = this.pendidikanTerakhir!.toJson();
+    data['asal_sekolah'] = asalSekolah;
+    if (pendidikanTerakhir != null) {
+      data['pendidikan_terakhir'] = pendidikanTerakhir!.toJson();
     }
-    data['tinggi_badan'] = this.tinggiBadan;
-    data['berat_badan'] = this.beratBadan;
-    data['bmi_value'] = this.bmiValue;
-    data['bmi_ket'] = this.bmiKet;
-    data['riwayat_penyakit'] = this.riwayatPenyakit;
-    data['no_ijazah'] = this.noIjazah;
-    data['tahun_lulus'] = this.tahunLulus;
-    data['no_str'] = this.noStr;
-    data['masa_berlaku_str'] = this.masaBerlakuStr;
-    data['tgl_berakhir_pks'] = this.tglBerakhirPks;
-    data['masa_diklat'] = this.masaDiklat;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    data['tinggi_badan'] = tinggiBadan;
+    data['berat_badan'] = beratBadan;
+    data['bmi_value'] = bmiValue;
+    data['bmi_ket'] = bmiKet;
+    data['riwayat_penyakit'] = riwayatPenyakit;
+    data['no_ijazah'] = noIjazah;
+    data['tahun_lulus'] = tahunLulus;
+    data['no_str'] = noStr;
+    data['masa_berlaku_str'] = masaBerlakuStr;
+    data['tgl_berakhir_pks'] = tglBerakhirPks;
+    data['masa_diklat'] = masaDiklat;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }
@@ -389,8 +389,8 @@ class UnitKerja {
   int? id;
   String? namaUnit;
   int? jenisKaryawan;
-  Null? deletedAt;
-  Null? createdAt;
+  Null deletedAt;
+  Null createdAt;
   String? updatedAt;
 
   UnitKerja(
@@ -411,13 +411,13 @@ class UnitKerja {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['nama_unit'] = this.namaUnit;
-    data['jenis_karyawan'] = this.jenisKaryawan;
-    data['deleted_at'] = this.deletedAt;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['nama_unit'] = namaUnit;
+    data['jenis_karyawan'] = jenisKaryawan;
+    data['deleted_at'] = deletedAt;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }
@@ -427,7 +427,7 @@ class Jabatan {
   String? namaJabatan;
   int? isStruktural;
   int? tunjanganJabatan;
-  Null? deletedAt;
+  Null deletedAt;
   String? createdAt;
   String? updatedAt;
 
@@ -451,14 +451,14 @@ class Jabatan {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['nama_jabatan'] = this.namaJabatan;
-    data['is_struktural'] = this.isStruktural;
-    data['tunjangan_jabatan'] = this.tunjanganJabatan;
-    data['deleted_at'] = this.deletedAt;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['nama_jabatan'] = namaJabatan;
+    data['is_struktural'] = isStruktural;
+    data['tunjangan_jabatan'] = tunjanganJabatan;
+    data['deleted_at'] = deletedAt;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }
@@ -468,9 +468,9 @@ class Kompetensi {
   String? namaKompetensi;
   int? jenisKompetensi;
   int? nilaiBor;
-  Null? deletedAt;
+  Null deletedAt;
   String? createdAt;
-  Null? updatedAt;
+  Null updatedAt;
 
   Kompetensi(
       {this.id,
@@ -492,14 +492,14 @@ class Kompetensi {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['nama_kompetensi'] = this.namaKompetensi;
-    data['jenis_kompetensi'] = this.jenisKompetensi;
-    data['nilai_bor'] = this.nilaiBor;
-    data['deleted_at'] = this.deletedAt;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['nama_kompetensi'] = namaKompetensi;
+    data['jenis_kompetensi'] = jenisKompetensi;
+    data['nilai_bor'] = nilaiBor;
+    data['deleted_at'] = deletedAt;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }
@@ -520,11 +520,11 @@ class StatusKaryawan {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['label'] = this.label;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['label'] = label;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }
@@ -533,8 +533,8 @@ class KelompokGaji {
   int? id;
   String? namaKelompok;
   int? besaranGaji;
-  Null? deletedAt;
-  Null? createdAt;
+  Null deletedAt;
+  Null createdAt;
   String? updatedAt;
 
   KelompokGaji(
@@ -555,13 +555,13 @@ class KelompokGaji {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['nama_kelompok'] = this.namaKelompok;
-    data['besaran_gaji'] = this.besaranGaji;
-    data['deleted_at'] = this.deletedAt;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['nama_kelompok'] = namaKelompok;
+    data['besaran_gaji'] = besaranGaji;
+    data['deleted_at'] = deletedAt;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }
@@ -571,7 +571,7 @@ class Ptkp {
   String? kodePtkp;
   int? kategoriTerId;
   int? nilai;
-  Null? deletedAt;
+  Null deletedAt;
   String? createdAt;
   String? updatedAt;
 
@@ -595,14 +595,14 @@ class Ptkp {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['kode_ptkp'] = this.kodePtkp;
-    data['kategori_ter_id'] = this.kategoriTerId;
-    data['nilai'] = this.nilai;
-    data['deleted_at'] = this.deletedAt;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['kode_ptkp'] = kodePtkp;
+    data['kategori_ter_id'] = kategoriTerId;
+    data['nilai'] = nilai;
+    data['deleted_at'] = deletedAt;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }
@@ -610,7 +610,7 @@ class Ptkp {
 class PendidikanTerakhir {
   int? id;
   String? label;
-  Null? deletedAt;
+  Null deletedAt;
   String? createdAt;
   String? updatedAt;
 
@@ -626,12 +626,12 @@ class PendidikanTerakhir {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['label'] = this.label;
-    data['deleted_at'] = this.deletedAt;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['label'] = label;
+    data['deleted_at'] = deletedAt;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }
@@ -654,12 +654,12 @@ class Role {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['deskripsi'] = this.deskripsi;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['deskripsi'] = deskripsi;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }

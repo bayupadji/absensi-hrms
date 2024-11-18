@@ -8,7 +8,6 @@ import 'package:absensi/utils/assets.dart';
 import 'package:absensi/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 class HomeScreenContent extends StatelessWidget {
   const HomeScreenContent({super.key});
@@ -296,10 +295,10 @@ class Menus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double initialSize = MediaQuery.of(context).orientation == Orientation.portrait ? 0.3 : 0.5;
+    double initialSize = MediaQuery.of(context).orientation == Orientation.portrait ? 0.35 : 0.5;
     return DraggableScrollableSheet(
       initialChildSize: initialSize,
-      minChildSize: 0.25,
+      minChildSize: 0.35,
       maxChildSize: 1.0,
       builder: (BuildContext context, ScrollController scrollController) {
         return Container(
