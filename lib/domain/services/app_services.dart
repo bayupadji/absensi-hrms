@@ -23,7 +23,7 @@ class AppServices {
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseData = jsonDecode(response.body);
-      
+
       // Pastikan struktur JSON sesuai dengan response
       if (responseData['user'] != null) {
         final userData = Data.fromJson(responseData['user']['data']);

@@ -5,6 +5,7 @@ class InputTextFields extends StatefulWidget {
   final String label;
   final String hint;
   final bool isPassword;
+  final TextEditingController? controller;
   final bool isEnabled;
 
   const InputTextFields({
@@ -12,6 +13,7 @@ class InputTextFields extends StatefulWidget {
     required this.label,
     required this.hint,
     required this.isPassword,
+    this.controller,
     this.isEnabled = true,
   });
 
@@ -60,6 +62,7 @@ class _InputTextFieldsState extends State<InputTextFields> {
           height: 8.0,
         ),
         TextFormField(
+          controller: widget.controller,
           focusNode: _focusNode,
           obscureText: widget.isPassword ? _obscureText : false,
           enabled: widget.isEnabled,

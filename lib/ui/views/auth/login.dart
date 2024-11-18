@@ -9,21 +9,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
-   LoginScreen({super.key});
+   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              HelpCenter(),
-              CompanyLogo(),
-              LoginForm(),
-            ],
-          ),
+      resizeToAvoidBottomInset: true,
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            HelpCenter(),
+            CompanyLogo(),
+            LoginForm(),
+          ],
         ),
       ),
     );
@@ -124,18 +123,19 @@ class LoginForm extends GetView<AuthController> {
             height: 24,
           ),
           Obx(() => SizedBox(
-                width: double.infinity,
-                child: DefaultButton(
-                  label: 'Masuk',
-                  onPressed: controller.isLoading.value
-                      ? null
-                      : () {
-                          controller.login();
-                        },
-                  bgColor: AppColors.primaryColor,
-                  fgColor: AppColors.backgroundColor,
-                ),
-              )),
+              width: double.infinity,
+              child: DefaultButton(
+                label: 'Masuk',
+                onPressed: controller.isLoading.value
+                    ? null
+                    : () {
+                        controller.login();
+                      },
+                bgColor: AppColors.primaryColor,
+                fgColor: AppColors.backgroundColor,
+              ),
+            )
+          ),
           SizedBox(
             height: 16,
           ),
@@ -151,33 +151,6 @@ class LoginForm extends GetView<AuthController> {
             ),
           )
         ],
-      ),
-    );
-  }
-}
-
-
-class InputTextFields extends StatelessWidget {
-  final String label;
-  final String hint;
-  final bool isPassword;
-  final TextEditingController? controller;
-
-  const InputTextFields({
-    required this.label,
-    required this.hint,
-    required this.isPassword,
-    this.controller,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      obscureText: isPassword,
-      decoration: InputDecoration(
-        labelText: label,
-        hintText: hint,
       ),
     );
   }
