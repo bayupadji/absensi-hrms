@@ -1,6 +1,6 @@
-import 'package:absensi/domain/bindings/app_binding.dart';
-import 'package:absensi/domain/routes/app_routes.dart';
-import 'package:absensi/utils/colors.dart';
+import 'package:absensi/app/routes/app_routes.dart';
+import 'package:absensi/app/routes/bindings/initialbindings.dart';
+import 'package:absensi/app/utils/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,14 +17,13 @@ class MainApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.splashscreens,
-      initialBinding: AppBinding(),
+      initialBinding: Initialbindings(),
       getPages: AppRoutes.routes,
       theme: ThemeData(
         textTheme: GoogleFonts.interTextTheme(),
-        primaryTextTheme: TextTheme(),
         scaffoldBackgroundColor: AppColors.backgroundColor,
         dialogBackgroundColor: AppColors.backgroundColor,
-        primaryColor: AppColors.primaryColor,
+        primaryColor: AppColors.primarySwatch.shade500,
       ),
     );
   }
