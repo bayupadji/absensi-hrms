@@ -79,16 +79,17 @@ class LoginForm extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     final AppController appController = Get.find();
+    final AuthController authController = Get.find();
 
     return Container(
       padding: EdgeInsets.all(24.0),
       child: Column(
         children: [
           InputTextFields(
-            label: 'Email/Username',
+            label: 'Username',
             hint: 'Masukan email atau username',
             isPassword: false,
-            controller: controller.emailController, // Connect controller
+            controller: authController.usernameController, // Connect controller
           ),
           SizedBox(
             height: 16,
@@ -97,7 +98,7 @@ class LoginForm extends GetView<AuthController> {
             label: 'Password',
             hint: 'Masukan password',
             isPassword: true,
-            controller: controller.passwordController, // Connect controller
+            controller: authController.passwordController, // Connect controller
           ),
           SizedBox(
             height: 16,
@@ -126,10 +127,10 @@ class LoginForm extends GetView<AuthController> {
               width: double.infinity,
               child: DefaultButton(
                 label: 'Masuk',
-                onPressed: controller.isLoading.value
+                onPressed: authController.isLoading.value
                     ? null
                     : () {
-                        controller.login();
+                        authController.login();
                       },
                 bgColor: AppColors.primaryColor,
                 fgColor: AppColors.backgroundColor,

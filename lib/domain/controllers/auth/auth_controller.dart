@@ -7,7 +7,7 @@ class AuthController extends GetxController {
   final AppServices appServices = Get.put(AppServices());
 
   // Form fields
-  final emailController = TextEditingController();
+  final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
   // Track loading state
@@ -16,7 +16,7 @@ class AuthController extends GetxController {
   Future<void> login() async {
     isLoading.value = true;
 
-    // loading animation
+    // Show loading animation
     Get.dialog(const Center(
       child: CircularProgressIndicator(
         color: AppColors.primaryColor,
@@ -24,17 +24,20 @@ class AuthController extends GetxController {
     ));
 
     try {
-      final email = emailController.text.trim();
+      final username = usernameController.text.trim();
       final password = passwordController.text;
 
-      if (email.isEmpty || password.isEmpty) {
+      // log untuk debugging
+      // print('Username: "$username"');
+      // print('Password: "$password"');
+
+      if (username.isEmpty || password.isEmpty) {
         Get.snackbar('Error', 'Please fill in both fields');
-        isLoading.value = false;
         return;
       }
 
       // Call login method from AppServices
-      final token = await appServices.login(email, password);
+      final token = await appServices.login(username, password);
 
       if (token.isNotEmpty) {
         Get.snackbar('Success', 'Logged in successfully');
@@ -42,10 +45,11 @@ class AuthController extends GetxController {
         Get.offAllNamed('/home');
       }
     } catch (e) {
+      Get.back();
       Get.snackbar('Login Failed', e.toString());
     } finally {
       isLoading.value = false;
-      Get.back();
+      Get.back(); // Close the loading dialog
     }
   }
 }

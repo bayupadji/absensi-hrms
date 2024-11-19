@@ -13,7 +13,7 @@ class InputTextFields extends StatefulWidget {
     required this.label,
     required this.hint,
     required this.isPassword,
-    this.controller,
+    required this.controller,
     this.isEnabled = true,
   });
 

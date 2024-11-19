@@ -11,11 +11,11 @@ class AppBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<OnboardingController>(() => OnboardingController());
-    Get.lazyPut<AuthController>(() => AuthController());
+    Get.put<AuthController>(AuthController());
     Get.put<HomeController>(HomeController());
     Get.put<DatetimeController>(DatetimeController());
     Get.put<LocationController>(LocationController());
     Get.put<AppController>(AppController());
-    Get.lazyPut<DatePickerController>(() => DatePickerController());
+    Get.put<DatePickerController>(DatePickerController());
   }
 }
