@@ -3,11 +3,24 @@ import 'package:absensi/app/data/services/database/auth_db.dart';
 class AuthRepository {
   final AuthDb _authDb = AuthDb.instance;
 
-  /// Menyimpan token ke dalam database
+  // Menyimpan token ke dalam database
   Future<int> insertToken(Map<String, dynamic> tokenData) async {
     final db = await _authDb.database;
     return await db.insert('tokens', tokenData);
   }
+
+  // Menyimpan unit kerja ke dalam database
+  Future<int> insertUnitKerja(Map<String, dynamic> unitKerjaData) async {
+    final db = await _authDb.database;
+    return await db.insert('unit_kerja', unitKerjaData);
+  }
+
+  // Menyimpan roles ke dalam database
+  Future<int> insertRole(Map<String, dynamic> roleData) async {
+    final db = await _authDb.database;
+    return await db.insert('roles', roleData);
+  }
+  
 
   /// Mengambil token dari database
   Future<Map<String, dynamic>?> getToken() async {

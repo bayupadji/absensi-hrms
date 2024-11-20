@@ -6,6 +6,7 @@ import 'package:absensi/app/utils/constants/api_repository.dart';
 
 class AuthService {
   final AuthRepository authRepository = AuthRepository();
+
   Future<String> auth(String username, String password) async {
     try {
       final url = Uri.parse(baseURL + loginUrl);
@@ -20,9 +21,6 @@ class AuthService {
         }),
       );
 
-      // print('Response Status: ${response.statusCode}');
-      // print('Response Body: ${response.body}');
-
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
 
@@ -34,30 +32,48 @@ class AuthService {
           final message = responseData['message'] as String;
           final status = responseData['status'] as int;
 
-          print('Parsed Status: $status');
-          print('Parsed Message: $message');
-          print('Parsed Token: $token');
-          print('Parsed arrToken: $arrToken');
-
           // Check if login is successful
           if (status == 200) {
             if (token.isNotEmpty) {
+              // Siapkan data untuk disimpan
               final tokenData = {
-                'token': token,
-                'arrToken': arrToken,
-                'userId': userData.id,
+                'id': userData.id,
                 'name': userData.nama,
                 'userName': userData.username,
-                'roleId':
-                    userData.roles.isNotEmpty ? userData.roles.first.id : null,
-                'roleName': userData.roles.isNotEmpty
-                    ? userData.roles.first.namaRole
-                    : null,
+                'email_verified_at': userData.emailVerifiedAt,
+                'role_id': userData.roleId,
+                'foto_profil': userData.fotoProfil,
+                'data_completion_step': userData.dataCompletionStep,
+                'status_aktif': userData.statusAktif,
+                'token': token,
+                'remember_token_expired_at': userData.rememberTokenExpiredAt,
+                'arrToken': arrToken,
               };
 
+              // Simpan token ke database
               await authRepository.insertToken(tokenData);
-              // for debugging log
-              print('Token saved successfully: $tokenData');
+
+              print(tokenData);
+
+              // Simpan unit kerja
+              for (var unitKerja in userData.unitKerja) {
+                await authRepository.insertUnitKerja({
+                  'id': unitKerja.id,
+                  'nama_unit': unitKerja.namaUnit,
+                  'jenis_karyawan': unitKerja.jenisKaryawan,
+                  'user_id': userData.id,
+                });
+              }
+
+              // Simpan roles
+              for (var role in userData.roles) {
+                await authRepository.insertRole({
+                  'id': role.id,
+                  'name': role.namaRole,
+                  'deskripsi': role.deskripsi,
+                  'user_id': userData.id,
+                });
+              }
 
               return token;
             } else {

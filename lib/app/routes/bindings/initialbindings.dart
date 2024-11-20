@@ -11,8 +11,8 @@ class Initialbindings extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<OnboardingController>(() => OnboardingController());
-    Get.put<AuthController>(AuthController());
-    Get.put<HomeController>(HomeController());
+    Get.lazyPut<AuthController>(()=>AuthController());
+    Get.lazyPut<HomeController>(()=>HomeController());
     Get.put<DatetimeController>(DatetimeController());
     Get.put<LocationController>(LocationController());
     Get.put<AppController>(AppController());

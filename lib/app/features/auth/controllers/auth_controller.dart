@@ -45,7 +45,6 @@ class AuthController extends GetxController {
         Get.offAllNamed('/home');
       }
     } catch (e) {
-      Get.back();
       Get.snackbar('Login Failed', e.toString());
     } finally {
       isLoading.value = false;

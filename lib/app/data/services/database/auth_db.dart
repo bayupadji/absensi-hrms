@@ -21,18 +21,41 @@ class AuthDb {
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
-  Future<void> _createDB(Database db , int version) async {
+Future<void> _createDB(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE tokens (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        token TEXT NOT NULL,
-        arrToken TEXT NOT NULL,
-        userId INTEGER NOT NULL,
-        name TEXT NOT NULL,
-        userName TEXT NOT NULL,
-        roleId INTEGER,
-        roleName TEXT
-      )
-    ''');
+    CREATE TABLE tokens (
+      id INTEGER PRIMARY KEY,
+      name TEXT NOT NULL,
+      userName TEXT NOT NULL,
+      email_verified_at TEXT,
+      role_id INTEGER,
+      foto_profil TEXT,
+      data_completion_step INTEGER,
+      status_aktif INTEGER,
+      token TEXT,
+      remember_token_expired_at TEXT,
+      arrToken TEXT
+    );
+  ''');
+
+    await db.execute('''
+    CREATE TABLE unit_kerja (
+      id INTEGER PRIMARY KEY,
+      nama_unit TEXT NOT NULL,
+      jenis_karyawan INTEGER,
+      user_id INTEGER,
+      FOREIGN KEY (user_id) REFERENCES tokens (id)
+    );
+  ''');
+
+    await db.execute('''
+    CREATE TABLE roles (
+      id INTEGER PRIMARY KEY,
+      name TEXT NOT NULL,
+      deskripsi TEXT,
+      user_id INTEGER,
+      FOREIGN KEY (user_id) REFERENCES tokens (id)
+    );
+  ''');
   }
 }
