@@ -1,5 +1,6 @@
 import 'package:absensi/app/features/home/controllers/datetime_controller.dart';
 import 'package:absensi/app/features/home/controllers/geolocator_controller.dart';
+import 'package:absensi/app/features/home/controllers/home_controller.dart';
 import 'package:absensi/app/utils/constants/assets.dart';
 import 'package:absensi/app/utils/theme/colors.dart';
 import 'package:absensi/app/utils/widgets/box_card/activity_box.dart';
@@ -9,78 +10,89 @@ import 'package:absensi/app/utils/widgets/button/attend_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeScreenContent extends StatelessWidget {
+class HomeScreenContent extends GetView<HomeController> {
   const HomeScreenContent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.primarySwatch.shade500,
-      appBar: AppBar(
-        backgroundColor: AppColors.primaryColor,
-        toolbarHeight: 80,
-        title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          CircleAvatar(
-            radius: 24,
-            backgroundImage: AssetImage(Assets.avatar),
-          ),
-          SizedBox(
-            width: 12,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Bayu Prasetya Adji S',
-                style: TextStyle(
-                    fontSize: 16,
-                    color: AppColors.backgroundColor,
-                    fontWeight: FontWeight.w700),
+
+    return Obx(() {
+      if (controller.isAuthenticated.value) {
+        return Scaffold(
+          backgroundColor: AppColors.primarySwatch.shade500,
+          appBar: AppBar(
+            backgroundColor: AppColors.primaryColor,
+            toolbarHeight: 80,
+            title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              CircleAvatar(
+                radius: 24,
+                backgroundImage: AssetImage(Assets.avatar),
               ),
               SizedBox(
-                height: 4,
+                width: 12,
               ),
-              Text(
-                'Product Designer',
-                style: TextStyle(
-                    fontSize: 14,
-                    color: AppColors.backgroundColor,
-                    fontWeight: FontWeight.w400),
-              ),
-            ],
-          ),
-        ]),
-        actions: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            child: Icon(
-              Icons.info_outline_rounded,
-              color: AppColors.backgroundColor,
-              size: 24,
-            ),
-          )
-        ],
-      ),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Positioned(
-              top: MediaQuery.of(context).size.height * 0.05,
-              left: 0,
-              right: 0,
-              child: Column(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 10),
-                  Attend(),
+                  Text(
+                    controller.userData['name'] ?? 'Unknown',
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: AppColors.backgroundColor,
+                        fontWeight: FontWeight.w700),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    'Product Designer',
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: AppColors.backgroundColor,
+                        fontWeight: FontWeight.w400),
+                  ),
                 ],
               ),
+            ]),
+            actions: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                child: Icon(
+                  Icons.info_outline_rounded,
+                  color: AppColors.backgroundColor,
+                  size: 24,
+                ),
+              )
+            ],
+          ),
+          body: SafeArea(
+            child: Stack(
+              children: [
+                Positioned(
+                  top: MediaQuery.of(context).size.height * 0.05,
+                  left: 0,
+                  right: 0,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10),
+                      Attend(),
+                    ],
+                  ),
+                ),
+                // Expanded(child: Menus()),
+                Menus(),
+              ],
             ),
-            // Expanded(child: Menus()),
-            Menus(),
-          ],
-        ),
-      ),
-    );
+          ),
+        );
+      } else {
+        return Scaffold(
+          body: Center(
+            child: Text('Please log in'),
+          ),
+        ); // or return a default widget
+      }
+    });
   }
 }
 
@@ -122,8 +134,9 @@ class Attend extends StatelessWidget {
           SizedBox(
             height: 24,
           ),
-          AttendButton(onPressed: () {
-             Get.snackbar(
+          AttendButton(
+            onPressed: () {
+              Get.snackbar(
                 '',
                 '',
                 duration: Duration(seconds: 2),
@@ -278,8 +291,7 @@ class Attend extends StatelessWidget {
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
                         color: AppColors.backgroundColor,
-                      )
-                    ),
+                      )),
                 ],
               )
             ],
@@ -295,7 +307,8 @@ class Menus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double initialSize = MediaQuery.of(context).orientation == Orientation.portrait ? 0.35 : 0.5;
+    double initialSize =
+        MediaQuery.of(context).orientation == Orientation.portrait ? 0.35 : 0.5;
     return DraggableScrollableSheet(
       initialChildSize: initialSize,
       minChildSize: 0.35,
@@ -359,24 +372,22 @@ class MenuGrid extends StatelessWidget {
       {'label': 'Laporan', 'image': 'assets/icons/menus/SystemReport.png'},
     ];
     return GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 4,
           mainAxisSpacing: 16,
           crossAxisSpacing: 16,
           childAspectRatio: 1,
-          mainAxisExtent: 108
-        ),
-        itemCount: menuItems.length,
-        padding: EdgeInsets.all(16),
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return MenuBox(
-            label: menuItems[index]['label']!,
-            image: menuItems[index]['image']!,
-          );
-        },
-
+          mainAxisExtent: 108),
+      itemCount: menuItems.length,
+      padding: EdgeInsets.all(16),
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return MenuBox(
+          label: menuItems[index]['label']!,
+          image: menuItems[index]['image']!,
+        );
+      },
     );
   }
 }

@@ -1,10 +1,10 @@
+import 'package:absensi/app/data/services/auth_service.dart';
 import 'package:absensi/app/utils/theme/colors.dart';
-import 'package:absensi/app/data/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
-  final AuthRepository authRepository = Get.put(AuthRepository());
+  final AuthService authService = Get.put(AuthService());
 
   // Form fields
   final usernameController = TextEditingController();
@@ -37,7 +37,7 @@ class AuthController extends GetxController {
       }
 
       // Call login method from AppServices
-      final token = await authRepository.auth(username, password);
+      final token = await authService.auth(username, password);
 
       if (token.isNotEmpty) {
         Get.snackbar('Success', 'Logged in successfully');
