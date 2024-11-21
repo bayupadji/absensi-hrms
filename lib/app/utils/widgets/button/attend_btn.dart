@@ -2,8 +2,18 @@ import 'package:absensi/app/utils/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class AttendButton extends StatelessWidget {
-  final VoidCallback?  onPressed;
-  const AttendButton({super.key, this.onPressed});
+  final VoidCallback? onPressed;
+  final IconData icon; // Ikon dinamis
+  final String label; // Label dinamis
+  final Color iconColor; // Warna dinamis
+
+  const AttendButton({
+    super.key,
+    required this.icon,
+    required this.label,
+    required this.iconColor,
+    this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,19 +30,19 @@ class AttendButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.login_rounded,
+              icon, // Ikon dinamis
               size: 56,
-              color: AppColors.primaryColor,
+              color: iconColor, // Warna dinamis
             ),
-            SizedBox(height: 8,),
+            SizedBox(height: 8),
             Text(
-              'Masuk',
+              label,
               style: TextStyle(
                 fontSize: 16,
                 color: AppColors.darkColor,
                 fontWeight: FontWeight.w500,
               ),
-            )
+            ),
           ],
         ),
       ),

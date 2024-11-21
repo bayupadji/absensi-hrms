@@ -29,9 +29,25 @@ class AuthRepository {
     return result.isNotEmpty ? result.first : null;
   }
 
-  /// Menghapus semua token dari database
-  Future<void> clearTokens() async {
+  /// Mengambil unitkerja dari database
+  Future<Map<String, dynamic>?> getUnitKerja() async {
+    final db = await _authDb.database;
+    final result = await db.query('unit_kerja', limit: 1);
+    return result.isNotEmpty ? result.first : null;
+  }
+
+  /// Mengambil role dari database
+  Future<Map<String, dynamic>?> getRole() async {
+    final db = await _authDb.database;
+    final result = await db.query('roles', limit: 1);
+    return result.isNotEmpty ? result.first : null;
+  }
+
+  /// Menghapus semua data dari database
+  Future<void> clearDb() async {
     final db = await _authDb.database;
     await db.delete('tokens');
+    await db.delete('unit_kerja');
+    await db.delete('roles');
   }
 }

@@ -8,14 +8,14 @@ import 'package:absensi/app/utils/widgets/box_card/info_box.dart';
 import 'package:absensi/app/utils/widgets/box_card/menu_box.dart';
 import 'package:absensi/app/utils/widgets/button/attend_btn.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import 'package:get/get.dart';
 
 class HomeScreenContent extends GetView<HomeController> {
   const HomeScreenContent({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
-
     return Obx(() {
       if (controller.isAuthenticated.value) {
         return Scaffold(
@@ -24,9 +24,10 @@ class HomeScreenContent extends GetView<HomeController> {
             backgroundColor: AppColors.primaryColor,
             toolbarHeight: 80,
             title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              CircleAvatar(
+              ProfilePicture(
+                name: controller.userData['name'] ?? 'Data tidak ditemukan',
                 radius: 24,
-                backgroundImage: AssetImage(Assets.avatar),
+                fontsize: 18,
               ),
               SizedBox(
                 width: 12,
@@ -35,7 +36,7 @@ class HomeScreenContent extends GetView<HomeController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    controller.userData['name'] ?? 'Unknown',
+                    controller.userData['name'] ?? 'Data tidak ditemukan',
                     style: TextStyle(
                         fontSize: 16,
                         color: AppColors.backgroundColor,
@@ -45,11 +46,15 @@ class HomeScreenContent extends GetView<HomeController> {
                     height: 4,
                   ),
                   Text(
-                    'Product Designer',
+                    controller.unitKerja.isNotEmpty
+                        ? controller.unitKerja['nama_unit'] ??
+                            'Data tidak ditemukan'
+                        : 'Data tidak ditemukan',
                     style: TextStyle(
-                        fontSize: 14,
-                        color: AppColors.backgroundColor,
-                        fontWeight: FontWeight.w400),
+                      fontSize: 14,
+                      color: AppColors.backgroundColor,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ],
               ),
@@ -97,7 +102,8 @@ class HomeScreenContent extends GetView<HomeController> {
 }
 
 class Attend extends StatelessWidget {
-  const Attend({super.key});
+  final HomeController homeController = Get.put(HomeController());
+  Attend({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -134,44 +140,53 @@ class Attend extends StatelessWidget {
           SizedBox(
             height: 24,
           ),
-          AttendButton(
-            onPressed: () {
-              Get.snackbar(
-                '',
-                '',
-                duration: Duration(seconds: 2),
-                snackPosition: SnackPosition.TOP,
-                margin: EdgeInsets.all(16),
-                backgroundColor: Colors.blue,
-                colorText: Colors.white,
-                isDismissible: true,
-                dismissDirection: DismissDirection.horizontal,
-                mainButton: TextButton(
-                  onPressed: () {
-                    // Close the SnackBar when the X button is pressed
-                    Get.back();
-                  },
-                  child: Icon(
-                    Icons.close,
-                    color: Colors.white,
-                  ),
-                ),
-                titleText: Row(
-                  children: [
-                    Icon(
-                      Icons.warning, // Exclamation mark icon
+          Obx(() {
+            final attendController = Get.find<HomeController>();
+            return AttendButton(
+              onPressed: () {
+                attendController.toggleIcon(); // Ubah status ikon
+
+                Get.snackbar(
+                  '',
+                  '',
+                  duration: Duration(seconds: 2),
+                  snackPosition: SnackPosition.TOP,
+                  margin: EdgeInsets.all(16),
+                  backgroundColor: Colors.blue,
+                  colorText: Colors.white,
+                  isDismissible: true,
+                  dismissDirection: DismissDirection.horizontal,
+                  mainButton: TextButton(
+                    onPressed: () {
+                      Get.closeAllSnackbars(); // Tutup SnackBar
+                    },
+                    child: Icon(
+                      Icons.close,
                       color: Colors.white,
                     ),
-                    SizedBox(width: 8), // Space between icon and text
-                    Text(
-                      'Debugging Clicked!',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
+                  ),
+                  titleText: Row(
+                    children: [
+                      Icon(
+                        Icons.warning, // Exclamation mark icon
+                        color: Colors.white,
+                      ),
+                      SizedBox(width: 8), // Space between icon and text
+                      Text(
+                        'Debugging Clicked!',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                );
+              },
+              icon: attendController.isClicked.value
+                  ? Icons.arrow_upward // Gunakan IconData
+                  : Icons.login_rounded,
+               // Gunakan IconData
+              label: attendController.isClicked.value ? 'Keluar' : 'Masuk', iconColor: attendController.isClicked.value ? AppColors.errorColor : AppColors.primaryColor,
+            );
+          }),
           SizedBox(
             height: 24,
           ),
@@ -185,12 +200,15 @@ class Attend extends StatelessWidget {
               SizedBox(
                 width: 8,
               ),
-              Text(
-                controller.currentLocation,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.backgroundColor,
+              Flexible(
+                child: Text(
+                  controller.currentAddress, // Menampilkan alamat
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.backgroundColor,
+                  ),
                 ),
               ),
             ]);
@@ -198,7 +216,7 @@ class Attend extends StatelessWidget {
           SizedBox(
             height: 24,
           ),
-          Row(
+          Obx(()=> Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Column(
@@ -214,7 +232,7 @@ class Attend extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    '20:00',
+                    homeController.jamFrom.value,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -245,7 +263,7 @@ class Attend extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    '20:00',
+                    homeController.jamTo.value,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -295,6 +313,7 @@ class Attend extends StatelessWidget {
                 ],
               )
             ],
+          ),
           )
         ],
       ),
