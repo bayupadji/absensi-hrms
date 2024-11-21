@@ -1,17 +1,17 @@
-import 'package:absensi/app/data/models/today_schedule_model.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'package:absensi/app/data/models/activity_attend_model.dart';
 import 'package:absensi/app/data/repositories/auth_repository.dart';
 import 'package:absensi/app/utils/constants/api_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'dart:convert';
-import 'dart:async';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 
-class AttendService {
+class ActivityService {
   final AuthRepository authRepository = AuthRepository();
 
-  Future<TodayScheduleParameter?> getAllAttendData() async {
+  Future<ActivityAttendModel?> getActivity() async {
     try {
       // Ambil token dari database
       final tokenData = await authRepository.getToken();
@@ -20,22 +20,15 @@ class AttendService {
         throw Exception("No token found, please log in again.");
       }
 
-      // Endpoint untuk data kehadiran
-      final url = Uri.parse(baseURL + getTodaySchedule);
-      final response = await http.get(
+      // Endpoint untuk data activity
+      final url = Uri.parse(baseURL + getAttendActivity);
+      final response = await http.post(
         url,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-      ).timeout(
-        const Duration(seconds: 30), // Tambahkan timeout
-        onTimeout: () {
-          throw TimeoutException(
-              'The connection has timed out, please try again.');
-        },
       );
-
       if (kDebugMode) {
         print('Response headers: ${response.headers}');
         print('Response status code: ${response.statusCode}');
@@ -49,27 +42,16 @@ class AttendService {
 
       final Map<String, dynamic> responseData = jsonDecode(response.body);
 
-      // Tangani status 404 dengan data valid
-      if (response.statusCode == 404 && responseData['data'] != null) {
-        if (kDebugMode) {
-          print(
-              'Attendance Data (404 with valid data): ${responseData['data']}');
-        }
-        return TodayScheduleParameter.fromJson(responseData);
-      }
-
-      // Tangani status 200
       if (response.statusCode == 200) {
         if (kDebugMode) {
-          print('Attendance Data: ${responseData['data']}');
+          print('Activity Data: ${responseData['ActivityData']}');
         }
-        return TodayScheduleParameter.fromJson(responseData);
+        return ActivityAttendModel.fromJson(responseData);
+      } else {
+        throw Exception(
+          'Failed to load activity attend: ${response.statusCode}'
+        );
       }
-
-      // Jika bukan 200 atau 404 dengan data valid, tangani sebagai error
-      final errorMessage = responseData['message'] ??
-          'Failed to fetch attendance data with status code: ${response.statusCode}';
-      throw Exception(errorMessage);
     } on SocketException {
       // Tangani masalah koneksi internet
       Get.snackbar(

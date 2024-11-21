@@ -1,6 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:absensi/app/data/models/auth_model.dart';
 import 'package:absensi/app/data/repositories/auth_repository.dart';
+import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:absensi/app/utils/constants/api_repository.dart';
 
@@ -53,7 +57,9 @@ class AuthService {
               // Simpan token ke database
               await authRepository.insertToken(tokenData);
 
-              print(tokenData);
+              if (kDebugMode){
+                print(tokenData);
+              }
 
               // Simpan unit kerja
               for (var unitKerja in userData.unitKerja) {
@@ -89,11 +95,41 @@ class AuthService {
         // Handle error response
         final Map<String, dynamic> errorData = jsonDecode(response.body);
         final errorMessage = errorData['message'] ??
-            'Login failed with status code: ${response.statusCode}';
+          'Login failed with status code: ${response.statusCode}';
         throw Exception(errorMessage);
       }
+    } on SocketException {
+      // Tangani masalah koneksi internet
+      Get.snackbar(
+        'Network Error',
+        'No internet connection. Please check your network settings.',
+      );
+      throw Exception('No internet connection');
+    } on TimeoutException {
+      // Tangani timeout
+      Get.snackbar(
+        'Timeout Error',
+        'The request took too long. Please try again.',
+      );
+      throw Exception('Request timeout');
+    } on HttpException {
+      // Tangani error HTTP umum
+      Get.snackbar(
+        'HTTP Error',
+        'An error occurred while communicating with the server.',
+      );
+      throw Exception('HTTP request failed');
+    } on FormatException {
+      // Tangani error parsing JSON
+      Get.snackbar(
+        'Data Error',
+        'Unable to parse server response.',
+      );
+      throw Exception('Invalid data format');
     } catch (e) {
-      throw Exception('An error occurred during login: $e');
+      // Tangani error yang tidak terduga
+      throw Exception('An unexpected error occurred during login: $e');
     }
   }
+
 }

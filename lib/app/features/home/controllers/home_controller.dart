@@ -29,7 +29,9 @@ class HomeController extends GetxController {
       final tokenData = await authRepo.getToken();
 
       // Untuk cek log
-      print('tokenData: $tokenData');
+      if (kDebugMode) {
+        print('tokenData: $tokenData');
+      }
 
       if (tokenData != null && tokenData.isNotEmpty) {
         isAuthenticated.value = true;
@@ -53,7 +55,9 @@ class HomeController extends GetxController {
       userData.value = {};
     }
 
-    print('isAuthenticated: ${isAuthenticated.value}');
+    if (kDebugMode) {
+      print('isAuthenticated: ${isAuthenticated.value}');
+    }
   }
 
   Future<void> fetchUnitKerja() async {
@@ -102,11 +106,10 @@ class HomeController extends GetxController {
     }
   }
 
-
   // log out logic
   Future<void> logout() async {
     try {
-      await authRepo.clearTokens();
+      await authRepo.clearDb();
       isAuthenticated.value = false;
       userData.value = {};
     } catch (e) {
@@ -114,6 +117,7 @@ class HomeController extends GetxController {
         'Error: ', // Judul SnackBar
         e.toString(),
       );
+
       if (kDebugMode) {
         print('Error during logout: $e');
       }
@@ -131,4 +135,5 @@ class HomeController extends GetxController {
     fetchUnitKerja();
     fetchAttendanceData();
   }
+  
 }

@@ -1,3 +1,4 @@
+import 'package:absensi/app/features/home/controllers/activity_controller.dart';
 import 'package:absensi/app/features/home/controllers/datetime_controller.dart';
 import 'package:absensi/app/features/home/controllers/geolocator_controller.dart';
 import 'package:absensi/app/features/home/controllers/home_controller.dart';
@@ -450,13 +451,13 @@ class Informations extends StatelessWidget {
   }
 }
 
-class Activity extends StatelessWidget {
+class Activity extends GetView<ActivityController> {
   const Activity({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -469,23 +470,64 @@ class Activity extends StatelessWidget {
                 color: AppColors.darkColor,
               ),
             ),
-            Text(
-              'Semua aktivitas',
-              style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 14,
-                color: AppColors.primaryColor,
+            GestureDetector(
+              onTap: () {
+                // Navigasi ke halaman semua aktivitas
+                // Get.toNamed('/all-activities');
+              },
+              child: Text(
+                'Semua aktivitas',
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  color: AppColors.primaryColor,
+                ),
               ),
             ),
           ]),
-          SizedBox(
-            height: 16,
-          ),
-          ActivityBox(
-            title: 'Masuk',
-            date: '20 November 2024',
-            time: '10:00',
-          ),
+          const SizedBox(height: 16),
+
+          // Gunakan Obx untuk reactive update
+          Obx(() {
+            // Cek apakah data aktivitas tersedia
+            if (controller.isLoading.value) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            // Jika tidak ada data
+            if (!controller.hasData) {
+              return const Center(
+                child: Text(
+                  'Tidak ada aktivitas hari ini',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              );
+            }
+
+            // Ambil maksimal 5 data pertama
+            final limitedActivities = controller.activities!.take(5).toList();
+
+
+            // Gunakan ListView.builder untuk menampilkan semua aktivitas
+            return ListView.builder(
+              shrinkWrap: true, // Penting untuk nested scrolling
+              physics:
+                  const NeverScrollableScrollPhysics(),
+              itemCount: limitedActivities.length,
+              itemBuilder: (context, index) {
+                final activity = limitedActivities[index];
+
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 12.0),
+                  child: ActivityBox(
+                    title: activity.presensi ?? 'Tidak diketahui',
+                    date: controller.formatActivityDate(activity.tanggal),
+                    time: controller.formatTime(activity.jam, defaultValue: '-'),
+                  ),
+                );
+              },
+            );
+          }),
         ],
       ),
     );
