@@ -105,7 +105,7 @@ class LocationController extends GetxController {
       if (placemarks.isNotEmpty) {
         Placemark place = placemarks.first;
         _currentAddress =
-            '${place.locality}, ${place.administrativeArea}, ${place.country}';
+            '${place.street},${place.locality}, ${place.administrativeArea}';
       } else {
         _currentAddress = 'No address available';
       }

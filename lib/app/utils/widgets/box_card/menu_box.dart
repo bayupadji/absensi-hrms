@@ -42,7 +42,7 @@ class MenuBox extends StatelessWidget {
             style: TextStyle(
               fontSize: 12,
               color: AppColors.darkColor,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
             ),
           )
         ],

@@ -67,40 +67,38 @@ class _InputTextFieldsState extends State<InputTextFields> {
           obscureText: widget.isPassword ? _obscureText : false,
           enabled: widget.isEnabled,
           decoration: InputDecoration(
-              hintText: widget.hint,
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 8,
-              ),
-              hintStyle: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
+            hintText: widget.hint,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 8,
+            ),
+            hintStyle: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: AppColors.greyColor,
+            ),
+            suffixIcon: widget.isPassword ? IconButton(
+              onPressed: _toggleObscureText,
+              icon: Icon(
+                _obscureText ? Icons.visibility_outlined : Icons.visibility_off_outlined,
                 color: AppColors.greyColor,
-              ),
-              suffixIcon: widget.isPassword
-                  ? IconButton(
-                      onPressed: _toggleObscureText,
-                      icon: Icon(
-                        _obscureText
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off_outlined,
-                        color: AppColors.greyColor,
-                      ))
-                  : null,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(
-                    color: AppColors.primaryColor,
-                  )),
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(
-                    color: AppColors.greyColor,
-                )
               )
+            ): null,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(
+                color: AppColors.primaryColor,
+              )
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(
+                color: AppColors.greyColor,
+              )
+            )
           ),
         ),
       ],

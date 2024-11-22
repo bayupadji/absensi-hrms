@@ -55,7 +55,9 @@ class OnboardingController extends GetxController {
       }
       return false; // User is not logged in
     } catch (e) {
-      print('Error checking login status: $e');
+      if (kDebugMode) {
+        print('Error checking login status: $e');
+      }
       return false;
     }
   }
@@ -63,9 +65,6 @@ class OnboardingController extends GetxController {
   Future<void> checkLoginOnStart() async {
     final isLoggedIn = await checkLogin();
 
-    if (kDebugMode) {
-      print('IsLogin:${isLoggedIn}');
-    }
     if (isLoggedIn) {
       Get.off(() => HomeScreen());
     } else {

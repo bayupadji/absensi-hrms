@@ -1,4 +1,5 @@
 import 'package:absensi/app/data/services/auth_service.dart';
+import 'package:absensi/app/utils/constants/assets.dart';
 import 'package:absensi/app/utils/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,9 +18,21 @@ class AuthController extends GetxController {
     isLoading.value = true;
 
     // Show loading animation
-    Get.dialog(const Center(
-      child: CircularProgressIndicator(
-        color: AppColors.primaryColor,
+    Get.dialog(Scaffold(
+      body: const Center(
+        child: Column(
+          children: [
+          Image(
+              image: AssetImage(Assets.logo),
+              width: 200,
+              height: 200,
+            ),
+            SizedBox(height: 16,),
+            CircularProgressIndicator(
+              color:AppColors.primaryColor,
+            ),
+          ],
+        ),
       ),
     ));
 

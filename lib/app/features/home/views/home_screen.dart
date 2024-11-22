@@ -14,7 +14,6 @@ import 'package:get/get.dart';
 
 class HomeScreenContent extends GetView<HomeController> {
   const HomeScreenContent({super.key});
-  
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -72,22 +71,15 @@ class HomeScreenContent extends GetView<HomeController> {
             ],
           ),
           body: SafeArea(
-            child: Stack(
-              children: [
-                Positioned(
-                  top: MediaQuery.of(context).size.height * 0.05,
-                  left: 0,
-                  right: 0,
-                  child: Column(
-                    children: [
-                      SizedBox(height: 10),
-                      Attend(),
-                    ],
-                  ),
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child:
+                Column(
+                  children: [
+                    Attend(),
+                    Menus(),
+                  ],
                 ),
-                // Expanded(child: Menus()),
-                Menus(),
-              ],
             ),
           ),
         );
@@ -96,7 +88,7 @@ class HomeScreenContent extends GetView<HomeController> {
           body: Center(
             child: Text('Please log in'),
           ),
-        ); // or return a default widget
+        );
       }
     });
   }
@@ -109,7 +101,7 @@ class Attend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       child: Column(
         children: [
           GetBuilder<DatetimeController>(builder: (controller) {
@@ -205,6 +197,8 @@ class Attend extends StatelessWidget {
                 child: Text(
                   controller.currentAddress, // Menampilkan alamat
                   textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -233,7 +227,7 @@ class Attend extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    homeController.jamFrom.value,
+                    homeController.jamFrom.value.isEmpty? '-' : homeController.jamFrom.value,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -264,7 +258,9 @@ class Attend extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    homeController.jamTo.value,
+                    homeController.jamFrom.value.isEmpty
+                          ? '-'
+                          : homeController.jamTo.value,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -295,7 +291,7 @@ class Attend extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    '20:00',
+                    '-',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -327,51 +323,20 @@ class Menus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double initialSize =
-        MediaQuery.of(context).orientation == Orientation.portrait ? 0.35 : 0.5;
-    return DraggableScrollableSheet(
-      initialChildSize: initialSize,
-      minChildSize: 0.35,
-      maxChildSize: 1.0,
-      builder: (BuildContext context, ScrollController scrollController) {
-        return Container(
-          decoration: BoxDecoration(
-            color: AppColors.backgroundColor,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-          ),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 8, bottom: 2),
-                child: Center(
-                  child: Container(
-                    width: 40,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[400],
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  controller: scrollController,
-                  child: Column(
-                    children: [
-                      MenuGrid(),
-                      Informations(),
-                      SizedBox(height: 24),
-                      Activity(),
-                      SizedBox(height: 24),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.backgroundColor,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      child: Column(
+        children: [
+          MenuGrid(),
+          SizedBox(height: 8),
+          Informations(),
+          SizedBox(height: 24),
+          Activity(),
+        ],
+      ),
     );
   }
 }
@@ -397,7 +362,7 @@ class MenuGrid extends StatelessWidget {
           mainAxisSpacing: 16,
           crossAxisSpacing: 16,
           childAspectRatio: 1,
-          mainAxisExtent: 108),
+          mainAxisExtent: 102),
       itemCount: menuItems.length,
       padding: EdgeInsets.all(16),
       physics: NeverScrollableScrollPhysics(),
@@ -430,7 +395,7 @@ class Informations extends StatelessWidget {
             child: Text(
               'Semua pengumuman',
               style: TextStyle(
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w600,
                 fontSize: 14,
                 color: AppColors.primaryColor,
               ),
@@ -441,10 +406,11 @@ class Informations extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: InfoBox(
-              label: 'Penggajian Okt 2024',
-              desc: 'Penggajian akan diterima pada tanggal 25 Okt',
-              time: '6 hari lalu',
-              expiry: 'berakhir 23-10-2024'),
+            label: 'Penggajian Okt 2024',
+            desc: 'Penggajian akan diterima pada tanggal 25 Okt',
+            time: '6 hari lalu',
+            expiry: 'berakhir 23-10-2024'
+          ),
         )
       ]),
     );
@@ -478,7 +444,7 @@ class Activity extends GetView<ActivityController> {
               child: Text(
                 'Semua aktivitas',
                 style: TextStyle(
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w600,
                   fontSize: 14,
                   color: AppColors.primaryColor,
                 ),

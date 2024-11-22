@@ -94,14 +94,10 @@ class HomeController extends GetxController {
         errorMessage.value = ''; // Kosongkan error jika data ada
       } else {
         // Tangani jika tidak ada data
-        jamFrom.value = 'No Data';
-        jamTo.value = 'No Data';
         errorMessage.value = attendanceData?.message ?? 'Unknown error';
       }
     } catch (e) {
       // Tangani error jika exception
-      jamFrom.value = 'Error';
-      jamTo.value = 'Error';
       errorMessage.value = e.toString();
     }
   }
