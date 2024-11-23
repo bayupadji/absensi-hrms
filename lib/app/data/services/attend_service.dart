@@ -56,9 +56,9 @@ class AttendService {
 
   void _logResponse(http.Response response) {
     if (kDebugMode) {
-      print('Response headers: ${response.headers}');
-      print('Response status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      print('Response headers attend: ${response.headers}');
+      print('Response status code attend: ${response.statusCode}');
+      print('Response body attend: ${response.body}');
     }
   }
 
@@ -73,16 +73,14 @@ class AttendService {
 
   TodayScheduleParameter? _handleResponseStatus(
       int statusCode, Map<String, dynamic> responseData) {
-    if (statusCode == 200 ||
-        (statusCode == 404 && responseData['data'] != null)) {
+    if (statusCode == 200 || (statusCode == 404 && responseData['data'] != null)) {
       if (kDebugMode) {
         print('Attendance Data: ${responseData['data']}');
       }
       return TodayScheduleParameter.fromJson(responseData);
     }
 
-    final errorMessage = responseData['message'] ??
-        'Failed to fetch attendance data with status code: $statusCode';
+    final errorMessage = responseData['message'] ?? 'Failed to fetch attendance data with status code: $statusCode';
     throw Exception(errorMessage);
   }
 }

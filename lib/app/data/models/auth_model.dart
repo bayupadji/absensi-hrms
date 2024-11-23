@@ -28,8 +28,8 @@ class AuthModel {
     required this.statusAktif,
     required this.rememberToken,
     required this.rememberTokenExpiredAt,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
     required this.token,
     required this.unitKerja,
     required this.roles
@@ -72,9 +72,9 @@ class UnitKerja {
     required this.id,
     required this.namaUnit,
     required this.jenisKaryawan,
-    required this.createdAt,
-    required this.updateAt,
-    required this.deletedAt
+    this.createdAt,
+    this.updateAt,
+    this.deletedAt
   });
 
   factory UnitKerja.fromJson(Map<String, dynamic> json) {
@@ -92,7 +92,7 @@ class UnitKerja {
 class Roles {
   final int id;
   final String namaRole;
-  final String deskripsi;
+  final String? deskripsi;
   final String guardName;
   final String? createdAt;
   final String? updatedAt;
@@ -101,11 +101,11 @@ class Roles {
   Roles({
     required this.id,
     required this.namaRole,
-    required this.deskripsi,
+    this.deskripsi,
     required this.guardName,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.deletedAt
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt
   });
 
   factory Roles.fromJson(Map<String, dynamic> json) {

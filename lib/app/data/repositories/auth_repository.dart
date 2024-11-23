@@ -20,7 +20,6 @@ class AuthRepository {
     final db = await _authDb.database;
     return await db.insert('roles', roleData);
   }
-  
 
   /// Mengambil token dari database
   Future<Map<String, dynamic>?> getToken() async {

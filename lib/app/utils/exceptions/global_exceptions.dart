@@ -1,26 +1,21 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:absensi/app/utils/widgets/modals/error_modal.dart'; // Import file Bottom Sheet
+import 'package:absensi/app/utils/widgets/modals/error_modal.dart';
 
 class GlobalExceptionHandler {
   static void handleError(Object error) {
     String message;
 
     if (error is SocketException) {
-      message =
-          'Oops! It seems you are not connected to the internet. Please check your network settings and try again.';
+      message = 'Ups! Sepertinya Anda tidak tersambung ke internet. Periksa pengaturan jaringan Anda dan coba lagi.';
     } else if (error is TimeoutException) {
-      message =
-          'The request is taking longer than expected. Please check your connection and try again.';
+      message = 'Permintaan membutuhkan waktu lebih lama dari yang diharapkan. Periksa koneksi Anda dan coba lagi.';
     } else if (error is HttpException) {
-      message =
-          'We encountered an issue while trying to reach the server. Please try again later.';
+      message = 'Kami mengalami masalah saat mencoba menjangkau server. Silakan coba lagi nanti.';
     } else if (error is FormatException) {
-      message =
-          'There was a problem with the data we received. Please try again.';
+      message = 'Ada masalah dengan data yang kami terima. Silakan coba lagi.';
     } else {
-      message =
-          'Something went wrong. Please try again or contact support if the issue persists.';
+      message = 'Ada yang tidak beres. Silakan coba lagi atau hubungi dukungan jika masalah terus berlanjut.';
     }
 
     // Menampilkan Bottom Sheet dengan pesan kesalahan
