@@ -1,6 +1,5 @@
 import 'package:absensi/app/data/services/auth_service.dart';
-import 'package:absensi/app/utils/constants/assets.dart';
-import 'package:absensi/app/utils/theme/colors.dart';
+import 'package:absensi/app/utils/widgets/loading/logo_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,50 +17,49 @@ class AuthController extends GetxController {
     isLoading.value = true;
 
     // Show loading animation
-    Get.dialog(Scaffold(
-      body: const Center(
-        child: Column(
-          children: [
-          Image(
-              image: AssetImage(Assets.logo),
-              width: 200,
-              height: 200,
-            ),
-            SizedBox(height: 16,),
-            CircularProgressIndicator(
-              color:AppColors.primaryColor,
-            ),
-          ],
-        ),
-      ),
-    ));
+    Get.dialog(LogoLoading());
 
     try {
       final username = usernameController.text.trim();
       final password = passwordController.text;
 
-      // log untuk debugging
-      // print('Username: "$username"');
-      // print('Password: "$password"');
-
-      if (username.isEmpty || password.isEmpty) {
-        Get.snackbar('Error', 'Please fill in both fields');
-        return;
-      }
-
-      // Call login method from AppServices
-      final token = await authService.auth(username, password);
-
-      if (token.isNotEmpty) {
-        Get.snackbar('Success', 'Logged in successfully');
-        // Navigate to the home page or main dashboard
-        Get.offAllNamed('/home');
+      if (_isInputValid(username, password)) {
+        final token = await _performLogin(username, password);
+        if (token.isNotEmpty) {
+          _onLoginSuccess();
+        }
       }
     } catch (e) {
-      Get.snackbar('Login Failed', e.toString());
+      _onLoginFailed(e);
     } finally {
-      isLoading.value = false;
-      Get.back(); // Close the loading dialog
+      _closeLoadingDialog();
     }
+  }
+
+  bool _isInputValid(String username, String password) {
+    if (username.isEmpty || password.isEmpty) {
+      Get.snackbar('Error', 'Please fill in both fields');
+      return false;
+    }
+    return true;
+  }
+
+  Future<String> _performLogin(String username, String password) async {
+    return await authService.auth(username, password);
+  }
+
+  void _onLoginSuccess() {
+    Get.snackbar('Success', 'Logged in successfully');
+    // Navigate to the home page or main dashboard
+    Get.offAllNamed('/home');
+  }
+
+  void _onLoginFailed(dynamic error) {
+    Get.snackbar('Login Failed', error.toString());
+  }
+
+  void _closeLoadingDialog() {
+    isLoading.value = false;
+    Get.back(); // Close the loading dialog
   }
 }

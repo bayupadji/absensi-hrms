@@ -18,7 +18,7 @@ class OnboardingPage extends StatelessWidget {
         child: Column(
           children: [
             GestureDetector(
-              onTap: () => onboardingController.onMove(context),
+              onTap: () => onboardingController.completeOnboarding(),
               child: Container(
                 padding: EdgeInsets.all(24),
                 child: Row(
@@ -68,7 +68,7 @@ class OnboardingPage extends StatelessWidget {
                       bgColor: AppColors.primarySwatch.shade500,
                       fgColor: AppColors.backgroundColor,
                       onPressed: () {
-                        onboardingController.onMove(context);
+                        onboardingController.completeOnboarding();
                       }),
                 ],
               ),

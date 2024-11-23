@@ -1,4 +1,6 @@
 import 'package:absensi/app/data/models/onboarding_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 final List<OnboardingModel> onboardingPages = [
   OnboardingModel(
@@ -20,3 +22,15 @@ final List<OnboardingModel> onboardingPages = [
         'Siap untuk produktivitas puncak? Mari selami dan tingkatkan efisiensi Anda!',
   ),
 ];
+
+class OnboardingRepository {
+  Future<void> setOnboardingCompleted(bool completed) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('onboarding_completed', completed);
+  }
+
+  Future<bool> isOnboardingCompleted() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('onboarding_completed') ?? false;
+  }
+}
