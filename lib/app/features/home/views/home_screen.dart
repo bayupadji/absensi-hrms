@@ -13,6 +13,7 @@ import 'package:absensi/app/utils/widgets/button/attend_btn.dart';
 import 'package:absensi/app/utils/widgets/loading/shimmer_loading.dart';
 import 'package:absensi/app/utils/widgets/state/empty_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import 'package:get/get.dart';
 
@@ -20,6 +21,13 @@ class HomeScreenContent extends GetView<HomeController> {
   const HomeScreenContent({super.key});
   @override
   Widget build(BuildContext context) {
+
+    // Mengubah warna status bar untuk halaman ini
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: AppColors.primarySwatch.shade500,
+      statusBarIconBrightness: Brightness.dark,
+    ));
+
     return Obx(() {
       if (controller.isAuthenticated.value) {
         return Scaffold(

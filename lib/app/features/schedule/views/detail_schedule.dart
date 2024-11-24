@@ -1,9 +1,9 @@
-
 import 'package:absensi/app/utils/constants/assets.dart';
 import 'package:absensi/app/utils/theme/colors.dart';
 import 'package:absensi/app/utils/widgets/box_card/detail_schedule_box.dart';
 import 'package:absensi/app/utils/widgets/box_card/employee_box.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class DetailSchedule extends StatelessWidget {
   const DetailSchedule({super.key});
@@ -11,6 +11,12 @@ class DetailSchedule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    // Mengubah warna status bar untuk halaman ini
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: AppColors.backgroundColor,
+      statusBarIconBrightness: Brightness.dark,
+    ));
+    
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(56),

@@ -5,12 +5,20 @@ import 'package:absensi/app/utils/widgets/box_card/menu_card.dart';
 import 'package:absensi/app/utils/widgets/box_card/profile_box.dart';
 import 'package:absensi/app/utils/widgets/box_card/reward_box.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ProfilScreen extends StatelessWidget {
   const ProfilScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    // Mengubah warna status bar untuk halaman ini
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: AppColors.backgroundColor,
+      statusBarIconBrightness: Brightness.dark,
+    ));
+    
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: AppColors.backgroundColor,

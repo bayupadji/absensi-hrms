@@ -5,6 +5,7 @@ import 'package:absensi/app/utils/widgets/button/default_btn.dart';
 import 'package:absensi/app/utils/widgets/indicators/dots_indicator.dart';
 import 'package:absensi/app/utils/widgets/content/onboard_content.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class OnboardingPage extends StatelessWidget {
@@ -13,6 +14,13 @@ class OnboardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final OnboardingController onboardingController = Get.find();
+
+    // Mengubah warna status bar untuk halaman ini
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: AppColors.backgroundColor,
+      statusBarIconBrightness: Brightness.dark,
+    ));
+
     return Scaffold(
       body: SafeArea(
         child: Column(

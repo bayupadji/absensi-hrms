@@ -5,6 +5,7 @@ import 'package:absensi/app/utils/widgets/box_card/activity_box.dart';
 import 'package:absensi/app/utils/widgets/loading/shimmer_loading.dart';
 import 'package:absensi/app/utils/widgets/state/empty_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class AllActivities extends GetView<ActivityController> {
@@ -13,6 +14,13 @@ class AllActivities extends GetView<ActivityController> {
 
   @override
   Widget build(BuildContext context) {
+
+    // Mengubah warna status bar untuk halaman ini
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: AppColors.backgroundColor,
+      statusBarIconBrightness: Brightness.dark,
+    ));
+
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,

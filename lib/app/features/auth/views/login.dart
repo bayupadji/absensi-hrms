@@ -6,6 +6,7 @@ import 'package:absensi/app/utils/widgets/button/default_btn.dart';
 import 'package:absensi/app/utils/widgets/button/icon_btn.dart';
 import 'package:absensi/app/utils/widgets/textfields/text_form.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -13,6 +14,13 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // Mengubah warna status bar untuk halaman ini
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: AppColors.backgroundColor,
+      statusBarIconBrightness: Brightness.dark,
+    ));
+
     return Scaffold(
       body: SafeArea(
         child: Stack(
