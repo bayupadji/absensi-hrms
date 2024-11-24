@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:absensi/app/data/models/activity_attend_model.dart';
 import 'package:absensi/app/data/repositories/auth_repository.dart';
 import 'package:absensi/app/utils/constants/api_repository.dart';
-import 'package:absensi/app/utils/exceptions/global_exceptions.dart';
+// import 'package:absensi/app/utils/exceptions/global_exceptions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,8 +16,11 @@ class ActivityService {
       final response = await _fetchActivityData(token);
       return _processResponse(response);
     } catch (e) {
-      GlobalExceptionHandler.handleError(e);
-      rethrow;
+      // log debug error
+      if (kDebugMode) {
+        print('Error: $e');
+      }
+      throw Exception('Error fetching Activity: $e');
     }
   }
 
@@ -66,10 +69,10 @@ class ActivityService {
   }
 
   ActivityAttendModel? _handleResponseStatus(
-      int statusCode, Map<String, dynamic> responseData) {
+  int statusCode, Map<String, dynamic> responseData) {
     if (statusCode == 200) {
       if (kDebugMode) {
-        print('Activity Data: ${responseData['ActivityData']}');
+        print('Activity Data: $responseData');
       }
       return ActivityAttendModel.fromJson(responseData);
     } else {

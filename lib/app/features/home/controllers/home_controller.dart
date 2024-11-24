@@ -16,6 +16,14 @@ class HomeController extends GetxController {
   PageController pageController = PageController();
   var isClicked = false.obs;
 
+  @override
+  void onInit() {
+    super.onInit();
+    loadToken(); // Memanggil loadToken saat controller diinisialisasi
+    fetchUnitKerja();
+    fetchAttendanceData();
+  }
+
   // navbar logic
   void onItemTap(int index) {
     selectIndex.value = index;
@@ -124,12 +132,4 @@ class HomeController extends GetxController {
     isClicked.value = !isClicked.value;
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    loadToken(); // Memanggil loadToken saat controller diinisialisasi
-    fetchUnitKerja();
-    fetchAttendanceData();
-  }
-  
 }

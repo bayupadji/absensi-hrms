@@ -13,7 +13,10 @@ class GetAnnouncement {
     return GetAnnouncement(
       status: json['status'] ?? 0,
       message: json['message'] ?? '',
-      data: (json['data'] as List<dynamic>?) ?.map((item) => Announcement.fromJson(item)).toList() ?? [],
+      data: (json['data'] as List<dynamic>?)
+              ?.map((item) => Announcement.fromJson(item))
+              .toList() ??
+          [],
     );
   }
 
@@ -31,9 +34,10 @@ class Announcement {
   final String judul;
   final String konten;
   final int isRead;
-  final DateTime tglMulai;
-  final DateTime tglBerakhir;
-  final DateTime updatedAt;
+  final DateTime tglMulai; // Mengubah menjadi DateTime
+  final DateTime tglBerakhir; // Mengubah menjadi DateTime
+  final DateTime? createdAt; // Mengubah menjadi DateTime
+  final DateTime? updatedAt; // Mengubah menjadi DateTime
 
   Announcement({
     required this.id,
@@ -42,7 +46,8 @@ class Announcement {
     required this.isRead,
     required this.tglMulai,
     required this.tglBerakhir,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory Announcement.fromJson(Map<String, dynamic> json) {
@@ -51,9 +56,14 @@ class Announcement {
       judul: json['judul'] ?? '',
       konten: json['konten'] ?? '',
       isRead: json['is_read'] ?? 0,
-      tglMulai: json['tgl_mulai'] != null ? DateTime.parse(json['tgl_mulai']) : DateTime.now(),
-      tglBerakhir: json['tgl_berakhir'] != null ? DateTime.parse(json['tgl_berakhir']) : DateTime.now(),
-      updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at']) : DateTime.now(),
+      tglMulai: DateTime.parse(json['tgl_mulai']), // Parsing ke DateTime
+      tglBerakhir: DateTime.parse(json['tgl_berakhir']), // Parsing ke DateTime
+      createdAt: json['created_at'] != null
+          ? DateTime.parse(json['created_at'])
+          : null, // Parsing ke DateTime
+      updatedAt: json['updated_at'] != null
+          ? DateTime.parse(json['updated_at'])
+          : null, // Parsing ke DateTime
     );
   }
 
@@ -63,13 +73,16 @@ class Announcement {
       'judul': judul,
       'konten': konten,
       'is_read': isRead,
-      'tgl_mulai': tglMulai.toIso8601String(),
-      'tgl_berakhir': tglBerakhir.toIso8601String(),
-      'updated_at': updatedAt.toIso8601String(),
+      'tgl_mulai': tglMulai.toIso8601String(), // Mengubah DateTime ke String
+      'tgl_berakhir':
+          tglBerakhir.toIso8601String(), // Mengubah DateTime ke String
+      'created_at': createdAt?.toIso8601String(), // Mengubah DateTime ke String
+      'updated_at': updatedAt?.toIso8601String(), // Mengubah DateTime ke String
     };
   }
 
   // Helper methods
   bool get isExpired => DateTime.now().isAfter(tglBerakhir);
-  bool get isActive => DateTime.now().isAfter(tglMulai) && DateTime.now().isBefore(tglBerakhir);
+  bool get isActive =>
+      DateTime.now().isAfter(tglMulai) && DateTime.now().isBefore(tglBerakhir);
 }

@@ -7,7 +7,7 @@ const String loginUrl = "/login";
 // HomeScreen
 const String getTodaySchedule = "/get-today-jadwal";
 const String getAttendActivity = "/get-activity-presensi";
-const String getLatestInfo = "/latest-penngumuman";
+const String getLatestAnnounce = "/latest-penngumuman";
 const String getCountNotifications = "/count-notifikasi";
 const String getCountUnreaddNotif = "/count-pending";
 

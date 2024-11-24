@@ -1,13 +1,17 @@
 import 'package:absensi/app/features/home/controllers/activity_controller.dart';
+import 'package:absensi/app/features/home/controllers/announcements_controller.dart';
 import 'package:absensi/app/features/home/controllers/datetime_controller.dart';
 import 'package:absensi/app/features/home/controllers/geolocator_controller.dart';
 import 'package:absensi/app/features/home/controllers/home_controller.dart';
+import 'package:absensi/app/routes/app_routes.dart';
 import 'package:absensi/app/utils/constants/assets.dart';
 import 'package:absensi/app/utils/theme/colors.dart';
 import 'package:absensi/app/utils/widgets/box_card/activity_box.dart';
 import 'package:absensi/app/utils/widgets/box_card/info_box.dart';
 import 'package:absensi/app/utils/widgets/box_card/menu_box.dart';
 import 'package:absensi/app/utils/widgets/button/attend_btn.dart';
+import 'package:absensi/app/utils/widgets/loading/shimmer_loading.dart';
+import 'package:absensi/app/utils/widgets/state/empty_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import 'package:get/get.dart';
@@ -73,13 +77,12 @@ class HomeScreenContent extends GetView<HomeController> {
           body: SafeArea(
             child: SingleChildScrollView(
               physics: AlwaysScrollableScrollPhysics(),
-              child:
-                Column(
-                  children: [
-                    Attend(),
-                    Menus(),
-                  ],
-                ),
+              child: Column(
+                children: [
+                  Attend(),
+                  Menus(),
+                ],
+              ),
             ),
           ),
         );
@@ -176,8 +179,11 @@ class Attend extends StatelessWidget {
               icon: attendController.isClicked.value
                   ? Icons.arrow_upward // Gunakan IconData
                   : Icons.login_rounded,
-               // Gunakan IconData
-              label: attendController.isClicked.value ? 'Keluar' : 'Masuk', iconColor: attendController.isClicked.value ? AppColors.errorColor : AppColors.primaryColor,
+              // Gunakan IconData
+              label: attendController.isClicked.value ? 'Keluar' : 'Masuk',
+              iconColor: attendController.isClicked.value
+                  ? AppColors.errorColor
+                  : AppColors.primaryColor,
             );
           }),
           SizedBox(
@@ -211,106 +217,109 @@ class Attend extends StatelessWidget {
           SizedBox(
             height: 24,
           ),
-          Obx(()=> Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    Assets.clockIn,
-                    width: 32,
-                    height: 32,
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    homeController.jamFrom.value.isEmpty? '-' : homeController.jamFrom.value,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.backgroundColor,
+          Obx(
+            () => Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      Assets.clockIn,
+                      width: 32,
+                      height: 32,
                     ),
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Text('Masuk',
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      homeController.jamFrom.value.isEmpty
+                          ? '-'
+                          : homeController.jamFrom.value,
                       style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
                         color: AppColors.backgroundColor,
-                      )),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    Assets.clockOut,
-                    width: 32,
-                    height: 32,
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    homeController.jamFrom.value.isEmpty
+                      ),
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Text('Masuk',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.backgroundColor,
+                        )),
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      Assets.clockOut,
+                      width: 32,
+                      height: 32,
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      homeController.jamFrom.value.isEmpty
                           ? '-'
                           : homeController.jamTo.value,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.backgroundColor,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Text('Keluar',
                       style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
                         color: AppColors.backgroundColor,
-                      )),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    Assets.clockTime,
-                    width: 32,
-                    height: 32,
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    '-',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.backgroundColor,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Text('Jam Kerja',
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Text('Keluar',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.backgroundColor,
+                        )),
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      Assets.clockTime,
+                      width: 32,
+                      height: 32,
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      '-',
                       style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
                         color: AppColors.backgroundColor,
-                      )),
-                ],
-              )
-            ],
-          ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Text('Jam Kerja',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.backgroundColor,
+                    )),
+                  ],
+                )
+              ],
+            ),
           )
         ],
       ),
@@ -377,7 +386,7 @@ class MenuGrid extends StatelessWidget {
   }
 }
 
-class Informations extends StatelessWidget {
+class Informations extends GetView<AnnouncementController> {
   const Informations({super.key});
 
   @override
@@ -403,15 +412,35 @@ class Informations extends StatelessWidget {
           )
         ]),
         SizedBox(height: 16),
-        SizedBox(
-          width: double.infinity,
-          child: InfoBox(
-            label: 'Penggajian Okt 2024',
-            desc: 'Penggajian akan diterima pada tanggal 25 Okt',
-            time: '6 hari lalu',
-            expiry: 'berakhir 23-10-2024'
-          ),
-        )
+        Obx(() {
+          // Cek apakah data sedang dimuat
+          if (controller.isLoading.value) {
+            return ShimmerLoading(
+              itemCount: 1,
+            );
+          }
+
+          // Cek apakah ada pengumuman
+          if (controller.announcements.isEmpty) {
+            return EmptyState(
+              title: 'Saat ini, tidak ada pengumuman yang tersedia.',
+              height: 150,
+              width: double.infinity,
+            );
+          }
+
+          // Tampilkan pengumuman
+          final announce = controller.announcements.first;
+          return SizedBox(
+            width: double.infinity,
+            child: InfoBox(
+              label: announce.judul,
+              desc: announce.konten,
+              time: controller.timeAgo(announce.createdAt!), // Menggunakan timeAgo
+              expiry: announce.tglBerakhir.toIso8601String(),
+            )
+          );
+        })
       ]),
     );
   }
@@ -439,7 +468,7 @@ class Activity extends GetView<ActivityController> {
             GestureDetector(
               onTap: () {
                 // Navigasi ke halaman semua aktivitas
-                // Get.toNamed('/all-activities');
+                Get.toNamed(AppRoutes.allActivity);
               },
               child: Text(
                 'Semua aktivitas',
@@ -457,28 +486,27 @@ class Activity extends GetView<ActivityController> {
           Obx(() {
             // Cek apakah data aktivitas tersedia
             if (controller.isLoading.value) {
-              return const Center(child: CircularProgressIndicator());
+              return ShimmerLoading(
+                itemCount: 5,
+              );
             }
 
-            // Jika tidak ada data
-            if (!controller.hasData) {
-              return const Center(
-                child: Text(
-                  'Tidak ada aktivitas hari ini',
-                  style: TextStyle(color: Colors.grey),
-                ),
+            // Pastikan activities tidak null dan memiliki data
+            if (controller.activities == null || controller.activities!.isEmpty) {
+              return EmptyState(
+                title: 'Saat ini, tidak ada aktivitas yang dilakukan.',
+                height: 150,
+                width: double.infinity,
               );
             }
 
             // Ambil maksimal 5 data pertama
             final limitedActivities = controller.activities!.take(5).toList();
 
-
             // Gunakan ListView.builder untuk menampilkan semua aktivitas
             return ListView.builder(
               shrinkWrap: true, // Penting untuk nested scrolling
-              physics:
-                  const NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: limitedActivities.length,
               itemBuilder: (context, index) {
                 final activity = limitedActivities[index];
@@ -488,7 +516,8 @@ class Activity extends GetView<ActivityController> {
                   child: ActivityBox(
                     title: activity.presensi ?? 'Tidak diketahui',
                     date: controller.formatActivityDate(activity.tanggal),
-                    time: controller.formatTime(activity.jam, defaultValue: '-'),
+                    time:
+                        controller.formatTime(activity.jam, defaultValue: '-'),
                   ),
                 );
               },
