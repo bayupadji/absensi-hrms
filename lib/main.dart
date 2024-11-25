@@ -1,5 +1,4 @@
 import 'package:absensi/app/routes/app_routes.dart';
-import 'package:absensi/app/routes/bindings/initialbindings.dart';
 import 'package:absensi/app/utils/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,9 +14,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.splashscreens,
-      initialBinding: Initialbindings(),
       getPages: AppRoutes.routes,
       theme: ThemeData(
         textTheme: GoogleFonts.interTextTheme(),

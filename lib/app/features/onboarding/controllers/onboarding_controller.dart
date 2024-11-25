@@ -3,6 +3,7 @@ import 'package:absensi/app/data/repositories/auth_repository.dart';
 import 'package:absensi/app/data/repositories/onboarding_repository.dart';
 import 'package:absensi/app/features/auth/views/login.dart';
 import 'package:absensi/app/features/onboarding/views/onboarding.dart';
+import 'package:absensi/app/routes/app_routes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,12 @@ class OnboardingController extends GetxController {
   final PageController pageController = PageController();
   var currentPage = 0.obs;
   bool isAutoScrolling = true;
+
+  @override
+  void onInit() {
+    super.onInit();
+    checkLoginOnStart();
+  }
 
   OnboardingController() {
     _startAutoScroll();
@@ -26,11 +33,6 @@ class OnboardingController extends GetxController {
     isAutoScrolling = false;
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    checkLoginOnStart();
-  }
 
   @override
   void onClose() {
@@ -63,7 +65,7 @@ class OnboardingController extends GetxController {
   Future<void> completeOnboarding() async {
     await onboardingRepo.setOnboardingCompleted(true);
     // Redirect to Login or Home screen after completing onboarding
-    Get.off(() => LoginScreen());
+    Get.toNamed(AppRoutes.login);
   }
 
   Future<bool> checkLogin() async {

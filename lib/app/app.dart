@@ -8,9 +8,7 @@ import 'package:absensi/app/utils/widgets/navigations/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeScreen extends StatelessWidget {
-  final HomeController controller =
-      Get.find();
+class HomeScreen extends GetView<HomeController> {
 
   HomeScreen({super.key});
 

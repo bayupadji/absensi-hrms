@@ -1,14 +1,14 @@
 import 'package:absensi/app/app.dart';
+import 'package:absensi/app/features/auth/bindings/auth_bindings.dart';
 import 'package:absensi/app/features/auth/views/login.dart';
+import 'package:absensi/app/features/home/bindings/home_bindings.dart';
 import 'package:absensi/app/features/home/views/all_activities.dart';
+import 'package:absensi/app/features/onboarding/bindings/onboard_bindings.dart';
 import 'package:absensi/app/features/onboarding/views/onboarding.dart';
 import 'package:absensi/app/features/onboarding/views/splashscreen.dart';
-import 'package:absensi/app/features/schedule/views/detail_schedule.dart';
-import 'package:absensi/app/routes/bindings/initialbindings.dart';
 import 'package:get/get.dart';
 
 class AppRoutes {
-  static final binding = Initialbindings();
   static const splashscreens = '/splashscreen';
   static const onboarding = '/onboarding';
   static const login = '/login';
@@ -20,31 +20,27 @@ class AppRoutes {
     GetPage(
       name: splashscreens,
       page: () => SplashScreen(),
+      binding: OnboardBindings(),
     ),
     GetPage(
       name: onboarding,
       page: () => OnboardingPage(),
-      binding: binding
+      binding: OnboardBindings()
     ),
     GetPage(
       name: login,
       page: () => LoginScreen(),
-      binding: binding
+      binding: AuthBindings()
     ),
     GetPage(
       name: home,
       page: () => HomeScreen(),
-      binding: binding
-    ),
-    GetPage(
-      name: detailSchedule,
-      page: () => DetailSchedule(),
-      binding: binding
+      binding: HomeBindings()
     ),
     GetPage(
       name: allActivity,
       page: () => AllActivities(),
-      binding: binding
+      binding: HomeBindings()
     ),
   ];
 }

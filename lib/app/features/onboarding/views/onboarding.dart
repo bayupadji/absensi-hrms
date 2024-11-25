@@ -8,12 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-class OnboardingPage extends StatelessWidget {
+class OnboardingPage extends GetView<OnboardingController> {
   const OnboardingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final OnboardingController onboardingController = Get.find();
 
     // Mengubah warna status bar untuk halaman ini
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -26,7 +25,7 @@ class OnboardingPage extends StatelessWidget {
         child: Column(
           children: [
             GestureDetector(
-              onTap: () => onboardingController.completeOnboarding(),
+              onTap: () => controller.completeOnboarding(),
               child: Container(
                 padding: EdgeInsets.all(24),
                 child: Row(
@@ -57,8 +56,8 @@ class OnboardingPage extends StatelessWidget {
             ),
             Expanded(
               child: PageView.builder(
-                  controller: onboardingController.pageController,
-                  onPageChanged: onboardingController.setCurrentPage,
+                  controller: controller.pageController,
+                  onPageChanged: controller.setCurrentPage,
                   itemCount: onboardingPages.length,
                   itemBuilder: (context, index) {
                     return OnboardingContent(
@@ -76,7 +75,7 @@ class OnboardingPage extends StatelessWidget {
                       bgColor: AppColors.primarySwatch.shade500,
                       fgColor: AppColors.backgroundColor,
                       onPressed: () {
-                        onboardingController.completeOnboarding();
+                        controller.completeOnboarding();
                       }),
                 ],
               ),
