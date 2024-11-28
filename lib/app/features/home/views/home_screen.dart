@@ -3,7 +3,7 @@ import 'package:absensi/app/features/home/controllers/announcements_controller.d
 import 'package:absensi/app/features/home/controllers/datetime_controller.dart';
 import 'package:absensi/app/features/home/controllers/geolocator_controller.dart';
 import 'package:absensi/app/features/home/controllers/home_controller.dart';
-import 'package:absensi/app/routes/app_routes.dart';
+import 'package:absensi/app/routes/routes_name.dart';
 import 'package:absensi/app/utils/constants/assets.dart';
 import 'package:absensi/app/utils/theme/colors.dart';
 import 'package:absensi/app/utils/widgets/box_card/activity_box.dart';
@@ -476,7 +476,7 @@ class Activity extends GetView<ActivityController> {
             GestureDetector(
               onTap: () {
                 // Navigasi ke halaman semua aktivitas
-                Get.toNamed(AppRoutes.allActivity);
+                Get.toNamed(RoutesName.allActivity);
               },
               child: Text(
                 'Semua aktivitas',

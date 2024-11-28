@@ -1,5 +1,5 @@
 
-import 'package:absensi/app/features/onboarding/controllers/splash_controller.dart';
+import 'package:absensi/app/features/splashscreen/controllers/splash_controller.dart';
 import 'package:absensi/app/utils/constants/assets.dart';
 import 'package:absensi/app/utils/theme/colors.dart';
 import 'package:flutter/material.dart';

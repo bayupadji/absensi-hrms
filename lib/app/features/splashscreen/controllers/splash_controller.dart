@@ -1,6 +1,6 @@
 // lib/app/features/splash/controllers/splash_controller.dart
+import 'package:absensi/app/routes/routes_name.dart';
 import 'package:get/get.dart';
-import 'package:absensi/app/routes/app_routes.dart';
 
 class SplashController extends GetxController {
   var isLoading = true.obs;
@@ -20,6 +20,6 @@ class SplashController extends GetxController {
   }
 
   void navigateToOnboarding() {
-    Get.toNamed(AppRoutes.onboarding);
+    Get.offNamed(RoutesName.onboarding);
   }
 }

@@ -34,44 +34,9 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/logo/logo_primary.png
-    - assets/images/hello/onboard1.png
-    - assets/images/hello/onboard2.png
-    - assets/images/hello/onboard3.png
-    - assets/icons/system/avatar.png
-    - assets/icons/system/clock_in.png
-    - assets/icons/system/clock_out.png
-    - assets/icons/system/clock_time.png
-    - assets/icons/system/bell.png
-    - assets/icons/system/bell_fill.png
-    - assets/icons/system/calendar_line.png
-    - assets/icons/system/filter.png
-    - assets/icons/system/Briefcase.png
-    - assets/icons/system/Briefcase_fill.png
-    - assets/icons/system/list.png
-    - assets/icons/system/lock_fill.png
-    - assets/icons/system/lock.png
-    - assets/icons/system/search.png
-    - assets/icons/system/shield.png
-    - assets/icons/system/trash.png
-    - assets/icons/system/folder.png
-    - assets/icons/system/usercomunity.png
-    - assets/icons/menus/Calendar.png
-    - assets/icons/menus/Documents.png
-    - assets/icons/menus/Form.png
-    - assets/icons/menus/Holiday.png
-    - assets/icons/menus/PurchaseOrder.png
-    - assets/icons/menus/SystemReport.png
-    - assets/icons/menus/Timer.png
-    - assets/icons/menus/Training.png
-    - assets/icons/navbar/calendar_fill.png
-    - assets/icons/navbar/home_fill.png
-    - assets/icons/navbar/inbox_fill.png
-    - assets/icons/navbar/usergroup_fill.png
-    - assets/icons/navbar/profil_fill.png
-    - assets/icons/navbar/calendar.png
-    - assets/icons/navbar/home.png
-    - assets/icons/navbar/inbox.png
-    - assets/icons/navbar/usergroup.png
-    - assets/icons/navbar/profil.png
+    - assets/images/logo/
+    - assets/images/hello/
+    - assets/icons/system/
+    - assets/icons/menus/
+    - assets/icons/navbar/
 

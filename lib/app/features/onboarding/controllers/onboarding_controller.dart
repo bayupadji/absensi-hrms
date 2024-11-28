@@ -1,9 +1,6 @@
-import 'package:absensi/app/app.dart';
 import 'package:absensi/app/data/repositories/auth_repository.dart';
 import 'package:absensi/app/data/repositories/onboarding_repository.dart';
-import 'package:absensi/app/features/auth/views/login.dart';
-import 'package:absensi/app/features/onboarding/views/onboarding.dart';
-import 'package:absensi/app/routes/app_routes.dart';
+import 'package:absensi/app/routes/routes_name.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +62,7 @@ class OnboardingController extends GetxController {
   Future<void> completeOnboarding() async {
     await onboardingRepo.setOnboardingCompleted(true);
     // Redirect to Login or Home screen after completing onboarding
-    Get.toNamed(AppRoutes.login);
+    Get.offNamed(RoutesName.login);
   }
 
   Future<bool> checkLogin() async {
@@ -93,13 +90,13 @@ class OnboardingController extends GetxController {
 
     if (isOnboardingCompleted) {
       if (isLoggedIn) {
-        Get.off(() => HomeScreen());
+        Get.offNamed(RoutesName.home);
       } else {
-        Get.off(() => LoginScreen());
+        Get.offNamed(RoutesName.login);
       }
     } else {
       // Show onboarding screens if not completed
-      Get.off(() => OnboardingPage());
+      Get.offNamed(RoutesName.onboarding);
     }
   }
 }

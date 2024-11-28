@@ -1,5 +1,6 @@
 import 'package:absensi/app/data/repositories/auth_repository.dart';
 import 'package:absensi/app/data/services/attend_service.dart';
+import 'package:absensi/app/routes/routes_name.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +20,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    loadToken(); // Memanggil loadToken saat controller diinisialisasi
+    loadToken();
     fetchUnitKerja();
     fetchAttendanceData();
   }
@@ -28,7 +29,6 @@ class HomeController extends GetxController {
   void onItemTap(int index) {
     selectIndex.value = index;
     pageController.jumpToPage(index);
-    update();
   }
 
   // load token logic
@@ -52,7 +52,7 @@ class HomeController extends GetxController {
           print('No token found, setting isAuthenticated to false.');
         }
 
-        Get.offAllNamed('/login');
+        Get.offNamed(RoutesName.login);
       }
     } catch (e) {
       // debug only
