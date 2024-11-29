@@ -16,6 +16,45 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import 'package:get/get.dart';
+import 'package:absensi/app/features/employee/views/employee.dart';
+import 'package:absensi/app/features/inbox/views/inbox.dart';
+import 'package:absensi/app/features/profile/views/profil.dart';
+import 'package:absensi/app/features/schedule/views/schedule.dart';
+import 'package:absensi/app/utils/widgets/navigations/navbar.dart';
+
+class HomeScreen extends GetView<HomeController> {
+  HomeScreen({super.key});
+
+  final List<Widget> pages = [
+    HomeScreenContent(),
+    ScheduleScreen(),
+    EmployeeScreen(),
+    InboxScreen(),
+    ProfilScreen(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: PageView(
+          controller: controller.pageController,
+          physics: NeverScrollableScrollPhysics(),
+          children: pages,
+        ),
+      ),
+      bottomNavigationBar: GetBuilder<HomeController>(
+        init: controller,
+        builder: (controller) {
+          return Navbar(
+            selectedIndex: controller.selectIndex.value,
+            onItemTapped: controller.onItemTap,
+          );
+        },
+      ),
+    );
+  }
+}
 
 class HomeScreenContent extends GetView<HomeController> {
   const HomeScreenContent({super.key});
@@ -24,8 +63,8 @@ class HomeScreenContent extends GetView<HomeController> {
 
     // Mengubah warna status bar untuk halaman ini
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: AppColors.primarySwatch.shade500,
-      statusBarIconBrightness: Brightness.dark,
+      statusBarColor: AppColors.primaryColor,
+      statusBarIconBrightness: Brightness.light,
     ));
 
     return Obx(() {
@@ -466,7 +505,7 @@ class Activity extends GetView<ActivityController> {
         children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text(
-              'Aktivitas Anda',
+              'Riwayat Presensi',
               style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 16,
@@ -479,7 +518,7 @@ class Activity extends GetView<ActivityController> {
                 Get.toNamed(RoutesName.allActivity);
               },
               child: Text(
-                'Semua aktivitas',
+                'Semua riwayat',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
@@ -502,7 +541,7 @@ class Activity extends GetView<ActivityController> {
             // Pastikan activities tidak null dan memiliki data
             if (controller.activities == null || controller.activities!.isEmpty) {
               return EmptyState(
-                title: 'Saat ini, tidak ada aktivitas yang dilakukan.',
+                title: 'Saat ini, tidak ada riwayat yang dilakukan.',
                 height: 150,
                 width: double.infinity,
               );

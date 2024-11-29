@@ -1,9 +1,10 @@
-import 'package:absensi/app/app.dart';
+import 'package:absensi/app/features/allhistory/bindings/history_binding.dart';
 import 'package:absensi/app/features/auth/bindings/auth_bindings.dart';
 import 'package:absensi/app/features/auth/views/login.dart';
 import 'package:absensi/app/features/employee/views/employee.dart';
 import 'package:absensi/app/features/home/bindings/home_bindings.dart';
-import 'package:absensi/app/features/home/views/all_activities.dart';
+import 'package:absensi/app/features/allhistory/views/all_activities.dart';
+import 'package:absensi/app/features/home/views/home_screen.dart';
 import 'package:absensi/app/features/inbox/views/inbox.dart';
 import 'package:absensi/app/features/onboarding/bindings/onboard_bindings.dart';
 import 'package:absensi/app/features/onboarding/views/onboarding.dart';
@@ -39,7 +40,7 @@ class Routes {
     GetPage(
       name: RoutesName.allActivity,
       page: () => AllActivities(),
-      binding: HomeBindings()
+      binding: HistoryBinding()
     ),
     GetPage(
       name: RoutesName.employee,

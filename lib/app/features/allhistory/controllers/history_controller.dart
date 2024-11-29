@@ -1,31 +1,24 @@
-import 'package:absensi/app/features/home/controllers/datetime_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:absensi/app/data/models/activity_attend_model.dart';
 import 'package:absensi/app/data/services/activity_service.dart';
 import 'package:intl/intl.dart';
 
-class ActivityController extends GetxController
-    with StateMixin<ActivityAttendModel> {
+class HistoryController extends GetxController with StateMixin<ActivityAttendModel> {
   final ActivityService _activityService;
-  final DatetimeController _datetimeController;
 
-  ActivityController(this._activityService, this._datetimeController);
+  HistoryController(this._activityService);
 
   final RxBool isLoading = false.obs;
   final Rx<String?> errorMessage = Rx<String?>(null);
 
-  // Getter untuk tanggal saat ini dari DatetimeController
-  String get currentDate => _datetimeController.currentDate;
-  String get currentTime => _datetimeController.currentTime;
-
   @override
   void onInit() {
     super.onInit();
-    fetchActivityData();
+    fetchHistoryData();
   }
 
-  Future<void> fetchActivityData() async {
+  Future<void> fetchHistoryData() async {
     try {
       isLoading.value = true;
       change(null, status: RxStatus.loading());
@@ -53,8 +46,7 @@ class ActivityController extends GetxController
             return true; // Hapus jika terjadi error saat parsing
           }
           // Hapus aktivitas yang tidak dalam rentang bulan ini
-          return activityDate.isBefore(firstDayOfCurrentMonth) ||
-              activityDate.isAfter(lastDayOfCurrentMonth);
+          return activityDate.isBefore(firstDayOfCurrentMonth) || activityDate.isAfter(lastDayOfCurrentMonth);
         });
 
         // Urutkan data dari tanggal terbaru ke terlama
@@ -95,9 +87,7 @@ class ActivityController extends GetxController
 
   // Utility method untuk membandingkan tanggal
   bool isSameDay(DateTime date1, DateTime date2) {
-    return date1.year == date2.year &&
-        date1.month == date2.month &&
-        date1.day == date2.day;
+    return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
   }
 
   // Method untuk mengonversi tanggal ke format yang lebih mudah dibaca
@@ -107,7 +97,6 @@ class ActivityController extends GetxController
     try {
       DateTime activityDate = DateTime.parse(tanggal);
       return DateFormat('dd MMMM yyyy').format(activityDate);
-
     } catch (e) {
       if (kDebugMode) {
         print('Error parsing activity date: $e');
@@ -116,43 +105,47 @@ class ActivityController extends GetxController
     }
   }
 
+  // Method untuk memformat tanggal ke format yang diinginkan
+  String formatDate(DateTime date, {String format = 'dd MMMM yyyy'}) {
+    return DateFormat(format).format(date);
+  }
+
   // Getter untuk mengakses data
   List<ActivityData>? get activities => state?.data;
 
   // Getter untuk status
   bool get hasData => state?.data != null && state!.data!.isNotEmpty;
 
-  String formatTime(String? jam,
-      {bool includeSeconds = false, String defaultValue = '-'}) {
+  String formatTime(String? jam, {bool includeSeconds = false, String defaultValue = '-'}) {
     if (jam == null) return defaultValue;
 
     try {
       // Support berbagai format input
       final formats = ['HH:mm:ss', 'HH:mm', 'HH:mm:ss.SSS'];
-
       DateTime? parsedTime;
 
       // Coba parsing dengan format berbeda
       for (var format in formats) {
         try {
-          parsedTime = DateFormat(format).parse(jam);
-          break;
-        } catch (_) {
-          continue;
+          parsedTime = DateFormat(format).parseStrict(jam);
+          break; // Jika berhasil, keluar dari loop
+        } catch (e) {
+          // Lanjutkan ke format berikutnya jika parsing gagal
         }
       }
 
-      if (parsedTime == null) return defaultValue;
-
-      // Pilih format output
-      return includeSeconds
-          ? DateFormat('HH:mm:ss').format(parsedTime)
+      if (parsedTime != null) {
+        return includeSeconds 
+          ? DateFormat('HH:mm:ss').format(parsedTime) 
           : DateFormat('HH:mm').format(parsedTime);
+      } else {
+        return defaultValue; // Kembalikan nilai default jika tidak ada format yang cocok
+      }
     } catch (e) {
       if (kDebugMode) {
-        print('Error parsing activity time: $e');
+        print('Error formatting time: $e');
       }
-      return defaultValue;
+      return defaultValue; // Kembalikan nilai default jika terjadi error
     }
   }
 }

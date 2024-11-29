@@ -29,6 +29,7 @@ class HomeController extends GetxController {
   void onItemTap(int index) {
     selectIndex.value = index;
     pageController.jumpToPage(index);
+    update();
   }
 
   // load token logic
@@ -96,8 +97,10 @@ class HomeController extends GetxController {
 
       if (attendanceData?.data?.shift != null) {
         // Data valid meskipun status 404
-        jamFrom.value = attendanceData!.data!.shift!.jamFrom?.substring(0, 5) ?? 'No Data';
-        jamTo.value = attendanceData.data!.shift!.jamTo?.substring(0, 5) ?? 'No Data';
+        jamFrom.value =
+            attendanceData!.data!.shift!.jamFrom?.substring(0, 5) ?? 'No Data';
+        jamTo.value =
+            attendanceData.data!.shift!.jamTo?.substring(0, 5) ?? 'No Data';
 
         errorMessage.value = ''; // Kosongkan error jika data ada
       } else {
@@ -131,5 +134,4 @@ class HomeController extends GetxController {
   void toggleIcon() {
     isClicked.value = !isClicked.value;
   }
-
 }
