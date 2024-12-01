@@ -13,7 +13,6 @@ import 'package:absensi/app/utils/widgets/button/attend_btn.dart';
 import 'package:absensi/app/utils/widgets/loading/shimmer_loading.dart';
 import 'package:absensi/app/utils/widgets/state/empty_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import 'package:get/get.dart';
 import 'package:absensi/app/features/employee/views/employee.dart';
@@ -36,12 +35,11 @@ class HomeScreen extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: PageView(
-          controller: controller.pageController,
-          physics: NeverScrollableScrollPhysics(),
-          children: pages,
-        ),
+      backgroundColor: AppColors.primaryColor,
+      body: PageView(
+        controller: controller.pageController,
+        physics: NeverScrollableScrollPhysics(),
+        children: pages,
       ),
       bottomNavigationBar: GetBuilder<HomeController>(
         init: controller,
@@ -61,12 +59,6 @@ class HomeScreenContent extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
 
-    // Mengubah warna status bar untuk halaman ini
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: AppColors.primaryColor,
-      statusBarIconBrightness: Brightness.light,
-    ));
-
     return Obx(() {
       if (controller.isAuthenticated.value) {
         return Scaffold(
@@ -74,6 +66,7 @@ class HomeScreenContent extends GetView<HomeController> {
           appBar: AppBar(
             backgroundColor: AppColors.primaryColor,
             toolbarHeight: 80,
+            scrolledUnderElevation: 0,
             title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
               ProfilePicture(
                 name: controller.userData['name'] ?? 'Data tidak ditemukan',
@@ -467,10 +460,12 @@ class Informations extends GetView<AnnouncementController> {
             );
           }
 
-          // Cek apakah ada pengumuman
+          // Check if there are any announcements
           if (controller.announcements.isEmpty) {
             return EmptyState(
-              title: 'Saat ini, tidak ada pengumuman yang tersedia.',
+              title: controller.errorMessage.value.isNotEmpty
+                  ? controller.errorMessage.value
+                  : 'Saat ini, tidak ada pengumuman yang tersedia.',
               height: 150,
               width: double.infinity,
             );
@@ -538,10 +533,11 @@ class Activity extends GetView<ActivityController> {
               );
             }
 
-            // Pastikan activities tidak null dan memiliki data
+            // Check if activities are null or empty
             if (controller.activities == null || controller.activities!.isEmpty) {
               return EmptyState(
-                title: 'Saat ini, tidak ada riwayat yang dilakukan.',
+                title: controller.errorMessage.value ??
+                    'Saat ini, tidak ada presensi yang dilakukan.',
                 height: 150,
                 width: double.infinity,
               );

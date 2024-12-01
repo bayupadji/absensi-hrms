@@ -5,7 +5,6 @@ import 'package:absensi/app/utils/theme/colors.dart';
 import 'package:absensi/app/utils/widgets/box_card/schedule_box.dart';
 import 'package:absensi/app/utils/widgets/modals/filterdate_modal.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -14,13 +13,6 @@ class ScheduleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    // Mengubah warna status bar untuk halaman ini
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: AppColors.backgroundColor,
-      statusBarIconBrightness: Brightness.dark,
-    ));
-    
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,

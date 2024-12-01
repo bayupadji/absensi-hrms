@@ -1,6 +1,6 @@
 import 'package:absensi/app/data/models/announcement_model.dart';
 import 'package:absensi/app/data/services/announcement_service.dart';
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -31,12 +31,11 @@ class AnnouncementController extends GetxController {
         }).toList();
         announcements.assignAll(formattedData);
       } else {
-        errorMessage.value = 'No announcements found';
+        errorMessage.value = 'Saat ini, tidak ada pengumuman yang tersedia.';
       }
-
-      if (kDebugMode) {
-        print(result);
-      }
+      // if (kDebugMode) {
+      //   print(result);
+      // }
     } catch (e) {
       errorMessage.value = e.toString();
     } finally {

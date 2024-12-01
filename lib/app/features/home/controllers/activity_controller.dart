@@ -47,9 +47,9 @@ class ActivityController extends GetxController
           try {
             activityDate = DateTime.parse(activity.tanggal!);
           } catch (e) {
-            if (kDebugMode) {
-              print('Error parsing date: $e');
-            }
+            // if (kDebugMode) {
+            //   print('Error parsing date: $e');
+            // }
             return true; // Hapus jika terjadi error saat parsing
           }
           // Hapus aktivitas yang tidak dalam rentang bulan ini
@@ -66,9 +66,9 @@ class ActivityController extends GetxController
             DateTime dateB = DateTime.parse(b.tanggal!);
             return dateB.compareTo(dateA);
           } catch (e) {
-            if (kDebugMode) {
-              print('Error parsing date: $e');
-            }
+            // if (kDebugMode) {
+            //   print('Error parsing date: $e');
+            // }
             return 0;
           }
         });
@@ -79,11 +79,11 @@ class ActivityController extends GetxController
           errorMessage.value = null;
         } else {
           change(null, status: RxStatus.empty());
-          errorMessage.value = 'No activity data available for this month';
+          errorMessage.value = 'Saat ini, tidak ada presensi yang dilakukan pada bulan ini.';
         }
       } else {
         change(null, status: RxStatus.empty());
-        errorMessage.value = 'No activity data available';
+        errorMessage.value = 'Saat ini, tidak ada presensi yang dilakukan.';
       }
     } catch (e) {
       change(null, status: RxStatus.error(e.toString()));
@@ -109,9 +109,9 @@ class ActivityController extends GetxController
       return DateFormat('dd MMMM yyyy').format(activityDate);
 
     } catch (e) {
-      if (kDebugMode) {
-        print('Error parsing activity date: $e');
-      }
+      // if (kDebugMode) {
+      //   print('Error parsing activity date: $e');
+      // }
       return 'Tanggal tidak valid';
     }
   }

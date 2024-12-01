@@ -24,6 +24,7 @@ dependencies:
   flutter_profile_picture: ^2.0.0
   shared_preferences: ^2.3.3
   shimmer: ^3.0.0
+  statusbarz: ^1.0.14
 
 dev_dependencies:
   flutter_test:
