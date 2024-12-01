@@ -483,8 +483,8 @@ class Informations extends GetView<AnnouncementController> {
             child: InfoBox(
               label: announce.judul,
               desc: announce.konten,
-              time: controller.timeAgo(announce.createdAt!), // Menggunakan timeAgo
-              expiry: announce.tglBerakhir.toIso8601String(),
+              time: controller.timeAgo(announce.createdAt),
+              expiry: announce.formattedExpiryDate ?? '-',
             )
           );
         })

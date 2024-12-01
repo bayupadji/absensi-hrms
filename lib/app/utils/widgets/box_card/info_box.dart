@@ -62,7 +62,7 @@ class InfoBox extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  expiry,
+                  "Berakhir $expiry",
                   style: TextStyle(
                     fontSize: 12,
                     color: AppColors.greyColor,

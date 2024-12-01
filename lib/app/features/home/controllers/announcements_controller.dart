@@ -2,6 +2,7 @@ import 'package:absensi/app/data/models/announcement_model.dart';
 import 'package:absensi/app/data/services/announcement_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class AnnouncementController extends GetxController {
   final AnnouncementService announcementService = AnnouncementService();
@@ -12,7 +13,7 @@ class AnnouncementController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchAnnouncements(); // Fetch announcements when the controller is initialized
+    fetchAnnouncements();
   }
 
   Future<void> fetchAnnouncements() async {
@@ -20,17 +21,34 @@ class AnnouncementController extends GetxController {
     errorMessage.value = '';
 
     try {
-      final GetAnnouncement result = await announcementService.fetchAnnouncements();
-      // If the result is not null, update the announcements list
-      if (kDebugMode){
+      final GetAnnouncement? result = await announcementService.fetchAnnouncements();
+
+      if (result != null && result.data.isNotEmpty) {
+        // Update and format each announcement
+        final formattedData = result.data.map((announcement) {
+          announcement.formattedExpiryDate = formatExpiryDate(announcement.tglBerakhir);
+          return announcement;
+        }).toList();
+        announcements.assignAll(formattedData);
+      } else {
+        errorMessage.value = 'No announcements found';
+      }
+
+      if (kDebugMode) {
         print(result);
       }
-      announcements.assignAll(result.data); // Update the observable list
     } catch (e) {
-      errorMessage.value = e.toString(); // Set error message
+      errorMessage.value = e.toString();
     } finally {
-      isLoading.value = false; // Set loading to false
+      isLoading.value = false;
     }
+  }
+
+  // Function to format expiry date
+  String formatExpiryDate(DateTime? expiryDate) {
+    if (expiryDate == null) return 'Invalid date';
+    final DateFormat formatter = DateFormat('dd-MM-yyyy');
+    return formatter.format(expiryDate);
   }
 
   String timeAgo(DateTime dateTime) {
