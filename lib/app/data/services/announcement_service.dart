@@ -67,17 +67,13 @@ class AnnouncementService {
     return _handleResponseStatus(response.statusCode, responseData);
   }
 
-  GetAnnouncement? _handleResponseStatus(
-      int statusCode, Map<String, dynamic> responseData) {
+  GetAnnouncement? _handleResponseStatus(int statusCode, Map<String, dynamic> responseData) {
     if (statusCode == 200) {
-      if (kDebugMode) {
-        print('Announcement Data: $responseData');
-      }
       return GetAnnouncement.fromJson(responseData);
     } else if (statusCode == 404) {
-      throw Exception('Announcements not found (404)');
+      throw Exception('$statusCode Announcements not found');
     } else {
-      throw Exception('Failed to load announcements: $statusCode');
+      throw Exception('$statusCode Failed to load announcements');
     }
   }
 }

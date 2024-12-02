@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:absensi/app/data/models/today_schedule_model.dart';
 import 'package:absensi/app/data/repositories/auth_repository.dart';
 import 'package:absensi/app/utils/constants/api_repository.dart';
-// import 'package:absensi/app/utils/exceptions/global_exceptions.dart';
+import 'package:absensi/app/utils/exceptions/global_exceptions.dart';
+import 'package:absensi/app/utils/widgets/modals/error_modal.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,12 +16,16 @@ class AttendService {
       final token = await _getToken();
       final response = await _fetchAttendanceData(token);
       return _processResponse(response);
-    } catch (e) {
-      // log debug error
+    } catch (e, stackTrace) {
+      // log for debugging
       if (kDebugMode) {
         print('Error: $e');
       }
-      throw Exception('Error fetching Schedule: $e');
+      GlobalExceptionHandler.handleError(e, stackTrace);
+
+      // Show the error bottom sheet with the error message
+      ErrorBottomSheet.show(e.toString());
+      rethrow;
     }
   }
 
@@ -36,7 +41,7 @@ class AttendService {
   Future<http.Response> _fetchAttendanceData(String token) async {
     final url = Uri.parse(baseURL + getTodaySchedule);
     final response = await http.get(
-      url,
+    url,
       headers: _buildHeaders(token),
     ).timeout(
       const Duration(seconds: 30),
@@ -71,18 +76,15 @@ class AttendService {
     return _handleResponseStatus(response.statusCode, responseData);
   }
 
-  TodayScheduleParameter? _handleResponseStatus(
-      int statusCode, Map<String, dynamic> responseData) {
-    if (statusCode == 200 ||
-        (statusCode == 404 && responseData['data'] != null)) {
+  TodayScheduleParameter? _handleResponseStatus(int statusCode, Map<String, dynamic> responseData) {
+    if (statusCode == 200 || (statusCode == 404 && responseData['data'] != null)) {
       if (kDebugMode) {
         print('Attendance Data: ${responseData['data']}');
       }
       return TodayScheduleParameter.fromJson(responseData);
     }
 
-    final errorMessage = responseData['message'] ??
-        'Failed to fetch attendance data with status code: $statusCode';
+    final errorMessage = responseData['message'] ?? '$statusCode Failed to fetch attendance data with status code';
     throw Exception(errorMessage);
   }
 }
