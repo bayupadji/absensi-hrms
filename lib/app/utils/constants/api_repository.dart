@@ -15,3 +15,6 @@ const String getCountUnreaddNotif = "/count-pending";
 const String postAttendCheckIn = "/check-in-presensi";
 const String postAttendCheckOut = "/check-out-presensi";
 const String getUserInfo = "/getuserinfo";
+
+// schedule
+const String getSchedule = "/get-jadwal";
