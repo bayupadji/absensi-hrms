@@ -18,3 +18,4 @@ const String getUserInfo = "/getuserinfo";
 
 // schedule
 const String getSchedule = "/get-jadwal";
+const String getEmployeeSchedule = "/get-karyawan-same-jadwal";
